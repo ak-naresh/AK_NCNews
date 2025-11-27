@@ -40,8 +40,8 @@
 
 # Order to create tables based on primary keys (PK) and foreign keys (FK):
 
-1. topics //topics contains no foreign keys
-2. users //`name` & `username` from Users used within `author` in Articles & Comments
+1. topics //topics contains no foreign keys = NO DEPENDENCIES
+2. users //`name` & `username` from Users used within `author` in Articles & Comments = NO DEPENDENCIES
 3. articles //`authors` from Articles used within `author` in Comments, `votes` in Articles references `votes` in Comments, `topic` in Articles references `slug` in Topics
 4. comments //`author` in Comments references `username` in Users, `topic` in Comments references `slug` in Topics, `votes` in Comments references `votes` in Articles
 
@@ -54,3 +54,8 @@
 # When dropping tables:
 
 When dropping tables in seed file, ensure to drop them in reverse order to avoid FK errors. (urghhh)
+
+# When seeding data (after creating tables):
+
+- When seeding data, ensure to seed tables in the correct order to avoid FK errors.
+- Seeding maps each topic object to an array of values- then uses `pg-format` to generate bulk SQL insert statement, then executes the query to insert all topics at once.
