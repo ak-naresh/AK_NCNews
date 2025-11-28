@@ -62,15 +62,12 @@ Each comment should have:
 
 - When dropping tables in seed file, ensure to drop them in reverse order to avoid FK errors. (urghhh)
 
+---
+
 # When seeding data (after creating tables):
 
 - When seeding data, ensure to seed tables in the correct order to avoid FK errors.
 - Seeding maps each topic object to an array of values- then uses `pg-format` to generate bulk SQL insert statement, then executes the query to insert all topics at once.
-
----
-
-# Need to:
-
-Note: Double check data provided for each table. You might need to manipulate data so it's in the correct format for each insert. The keys on each object in the data may not line up with the column names you created on the previous task.
-
-We strongly recommend building a utils function in the file we've already provided. Remember, to fully test any functions that you do create.
+- Double check data provided for each table. You might need to manipulate data so it's in the correct format for each insert. The keys on each object in the data may not line up with the column names you created on the previous task.
+- Build a utils function in utils.js and fully test any functions created.
+- Use utility functions to transform data for comments seeding table (i.e., mapping article titles to IDs for comments).
