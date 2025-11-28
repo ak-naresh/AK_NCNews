@@ -132,7 +132,11 @@ DROP TABLE IF EXISTS topics;
 
 /*
 to check again via terminal, in psql, connect to nc_news_test , then to check type: 
-SELECT comment_id, article_id, body, votes, author, created_at FROM comments;
+
+SELECT c.comment_id, c.article_id, a.title
+FROM comments c
+JOIN articles a ON c.article_id = a.article_id;
+
 */
 
 module.exports = seed;
