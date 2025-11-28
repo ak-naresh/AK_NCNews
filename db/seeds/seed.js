@@ -1,8 +1,9 @@
 const db = require("../connection");
 const format = require("pg-format");
+const mapCommentToArticleId = require("./utils");
 
 const seed = ({ topicData, userData, articleData, commentData }) => {
-  //drop table if exist in reverse order & create tables in order of dependencies
+  //drop table if exists (must be in reverse order) & create tables in order of dependencies
   return (
     db
       .query(
@@ -47,7 +48,7 @@ DROP TABLE IF EXISTS topics;
 `
       )
 
-      // seeding for topic
+      //seedings
       .then(() => {
         const topicRows = topicData.map(({ slug, description, img_url }) => [
           slug,
@@ -60,7 +61,78 @@ DROP TABLE IF EXISTS topics;
         );
         return db.query(insertTopicsQuery);
       })
+
+      .then(() => {
+        const userRows = userData.map(({ username, name, avatar_url }) => [
+          username,
+          name,
+          avatar_url,
+        ]);
+        const insertUsersQuery = format(
+          "INSERT INTO users (username, name, avatar_url) VALUES %L RETURNING *;",
+          userRows
+        );
+        return db.query(insertUsersQuery);
+      })
+
+      .then(() => {
+        const articleRows = articleData.map(
+          ({
+            title,
+            topic,
+            author,
+            body,
+            created_at,
+            votes,
+            article_img_url,
+          }) => [title, topic, author, body, created_at, votes, article_img_url]
+        );
+        const insertArticlesQuery = format(
+          "INSERT INTO articles (title, topic, author, body, created_at, votes, article_img_url) VALUES %L RETURNING *;",
+          articleRows
+        );
+        return db.query(insertArticlesQuery);
+      })
+
+      //seeding for comments using mapped article_ids
+      .then(() => {
+        return db
+          .query("SELECT * FROM articles;") //need inserted articles to retrieve autogen articles_id
+
+          .then((articleInsertResult) => {
+            //handles result of insertArticlesQuery which contains rows (rows = array of all article records)
+            const insertedArticles = articleInsertResult.rows;
+
+            //inserteDArticles stores array from rows for mapping
+
+            //mappedComment from utils, returns anew array of comments instead of mutating original and assiginss to correct aritcle_id instead of article_title
+            const mappedComments = mapCommentToArticleId(
+              commentData,
+              insertedArticles
+            );
+
+            const commentRows = mappedComments.map(
+              ({ article_id, body, votes, author, created_at }) => [
+                article_id,
+                body,
+                votes,
+                author,
+                created_at,
+              ]
+            );
+            const insertCommentsQuery = format(
+              "INSERT INTO comments (article_id, body, votes, author, created_at) VALUES %L RETURNING *;",
+              commentRows
+            );
+            return db.query(insertCommentsQuery);
+          });
+      })
   );
 };
+
+/*
+to check again via terminal, in psql, connect to nc_news_test , then to check type: 
+SELECT comment_id, article_id, body, votes, author, created_at FROM comments;
+*/
 
 module.exports = seed;

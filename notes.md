@@ -68,3 +68,9 @@ Each comment should have:
 - Seeding maps each topic object to an array of values- then uses `pg-format` to generate bulk SQL insert statement, then executes the query to insert all topics at once.
 
 ---
+
+# Need to:
+
+Note: Double check data provided for each table. You might need to manipulate data so it's in the correct format for each insert. The keys on each object in the data may not line up with the column names you created on the previous task.
+
+We strongly recommend building a utils function in the file we've already provided. Remember, to fully test any functions that you do create.
