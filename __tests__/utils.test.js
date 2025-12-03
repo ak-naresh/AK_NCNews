@@ -1,6 +1,13 @@
+const db = require("../db/connection");
+const seed = require("../db/seeds/seed");
+const testData = require("../db/data/test-data");
 const mapCommentToArticleId = require("../db/seeds/utils");
 
+beforeAll(() => seed(testData));
+afterAll(() => db.end());
+
 describe("mapCommentToArticleId", () => {
+  //1
   test("does not mutate the original array and returns a new array", () => {
     const comments = [
       {
