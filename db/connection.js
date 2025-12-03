@@ -1,4 +1,4 @@
-const { Pool } = require("pg");
+const { Pool } = require("pg"); //Pool allows handling of multiple queries instead or reconnecting each time)
 
 const ENV = process.env.NODE_ENV || "development";
 

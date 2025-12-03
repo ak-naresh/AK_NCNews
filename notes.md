@@ -1,26 +1,17 @@
 ----
 Requirements:
 
-# Topics
-
-Each topic in the topics table should have:
-
+# Topics- Each topic in the topics table should have:
 - `slug` field which is a unique string that acts as the table`s primary key (a slug is a term used in publishing to identify an article)
 - `description` field which is a string giving a brief description of a given topic
 - `img_url` field which contains a string containing a link to an image representing the topic
 
-# Users
-
-Each user should have:
-
+# Users- Each user should have:
 - `username` which is the primary key & unique
 - `name`
 - `avatar_url`
 
-# Articles
-
-Each article should have:
-
+# Articles- Each article should have:
 - `article_id` which is the primary key
 - `title`
 - `topic` field which references the `slug` in the topics table
@@ -30,10 +21,7 @@ Each article should have:
 - `votes` defaults to 0
 - `article_img_url`
 
-# Comments
-
-Each comment should have:
-
+# Comments- Each comment should have:
 - `comment_id` which is the primary key
 - `article_id` field that references an article`s primary key
 - `body`
@@ -45,10 +33,10 @@ Each comment should have:
 
 # Order to create tables based on primary keys (PK) and foreign keys (FK):
 
-1. topics //topics contains no foreign keys = NO DEPENDENCIES
-2. users //`name` & `username` from Users used within `author` in Articles & Comments = NO DEPENDENCIES
-3. articles //`authors` from Articles used within `author` in Comments, `votes` in Articles references `votes` in Comments, `topic` in Articles references `slug` in Topics
-4. comments //`author` in Comments references `username` in Users, `topic` in Comments references `slug` in Topics, `votes` in Comments references `votes` in Articles
+- 1 topics //topics contains no foreign keys = NO DEPENDENCIES
+- 2 users //`name` & `username` from Users used within `author` in Articles & Comments = NO DEPENDENCIES
+- 3 articles //`authors` from Articles used within `author` in Comments, `votes` in Articles references `votes` in Comments, `topic` in Articles references `slug` in Topics
+- 4 comments //`author` in Comments references `username` in Users, `topic` in Comments references `slug` in Topics, `votes` in Comments references `votes` in Articles
 
 ---
 
