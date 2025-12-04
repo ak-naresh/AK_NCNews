@@ -97,7 +97,7 @@ describe("GET /api/articles", () => {
       });
   });
 */
-  /*
+
   //4
   test("articles are sorted by date descending", () => {
     return request(app)
@@ -106,9 +106,8 @@ describe("GET /api/articles", () => {
       .then((response) => {
         const articles = response.body.articles;
       });
-      ...(incomplete)
+    //...(incomplete)
   });
-  */
 
   //5
   test("article object does not have a 'body' property", () => {
