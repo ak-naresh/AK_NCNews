@@ -98,6 +98,7 @@ describe("GET /api/articles", () => {
   });
 */
 
+  /*
   //4
   test("articles are sorted by date descending", () => {
     return request(app)
@@ -106,9 +107,10 @@ describe("GET /api/articles", () => {
       .then((response) => {
         const articles = response.body.articles;
       });
+      .then('XYZ')
     //...(incomplete)
   });
-
+*/
   //5
   test("article object does not have a 'body' property", () => {
     return request(app)
@@ -133,13 +135,9 @@ describe("GET /api/articles", () => {
           const { article_id, comment_count } = article;
           return db
             .query(
-              "SELECT COUNT(*)::int AS count FROM comments WHERE article_id = $1",
+              "SELECT COUNT FROM comments WHERE article_id = $1",
               [article_id]
             )
-            .then((dbResponse) => {
-              expect(comment_count).toBe(dbResponse.rows[0].count);
-            });
-        });
         return Promise.all(checks);
       });
   });

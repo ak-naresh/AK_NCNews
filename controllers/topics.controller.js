@@ -1,5 +1,4 @@
 const db = require("../db/connection");
-
 const { fetchTopics } = require("../models/topics.model");
 
 /* 
@@ -8,8 +7,10 @@ const { fetchTopics } = require("../models/topics.model");
 3. Sends the response wrapping array of topic
 */
 
-exports.getTopics = (require, response) => {
+function getTopics(require, response) {
   fetchTopics().then((topics) => {
     response.status(200).send({ topics });
   });
-};
+}
+
+module.exports = { getTopics };

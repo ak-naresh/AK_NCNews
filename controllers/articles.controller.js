@@ -1,5 +1,4 @@
 const db = require("../db/connection");
-
 const { fetchArticles } = require("../models/articles.model");
 
 /*
@@ -8,8 +7,10 @@ const { fetchArticles } = require("../models/articles.model");
 3. Sends the response wrapping array of articles
 */
 
-exports.getArticles = (require, response) => {
+function getArticles(request, response) {
   fetchArticles().then((articles) => {
     response.status(200).send({ articles });
   });
-};
+}
+
+module.exports = { getArticles };
