@@ -8,8 +8,8 @@ const { fetchArticles } = require("../models/articles.model");
 3. Sends the response wrapping array of articles
 */
 
-exports.getArticles = (req, res) => {
+exports.getArticles = (require, response) => {
   fetchArticles().then((articles) => {
-    res.status(200).send({ articles });
+    response.status(200).send({ articles });
   });
 };

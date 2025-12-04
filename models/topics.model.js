@@ -7,7 +7,7 @@ Query selects both 'slug' && 'description' from topics table, so each topic obje
 
 function fetchTopics() {
   return db
-    .query(`SELECT slug, description FROM topics;`)
+  .query(`SELECT slug, description FROM topics;`)
     .then((result) => result.rows);
 }
 

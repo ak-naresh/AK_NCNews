@@ -15,8 +15,8 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect("Content-Type", /json/)
       .expect(200)
-      .then((res) => {
-        expect(res.body).toHaveProperty("articles");
+      .then((response) => {
+        expect(response.body).toHaveProperty("articles");
       });
   });
 
@@ -25,8 +25,8 @@ describe("GET /api/articles", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
-      .then((res) => {
-        expect(Array.isArray(res.body.articles)).toBe(true);
+      .then((response) => {
+        expect(Array.isArray(response.body.articles)).toBe(true);
       });
   });
 
@@ -36,16 +36,16 @@ describe("GET /api/articles", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
-      .then((res) => {
-        res.body.articles.forEach((article) => {
-          expect(article).toHaveProperty("author");
-          expect(article).toHaveProperty("title");
-          expect(article).toHaveProperty("article_id");
-          expect(article).toHaveProperty("topic");
-          expect(article).toHaveProperty("created_at");
-          expect(article).toHaveProperty("votes");
-          expect(article).toHaveProperty("article_img_url");
-          expect(article).toHaveProperty("comment_count");
+      .then((response) => {
+        response.body.articles.forEach((article) => {
+            expect(typeof article.author).toBe("string");
+            expect(typeof article.title).toBe("string");
+            expect(typeof article.article_id).toBe("number");
+            expect(typeof article.topic).toBe("string");
+            expect(typeof article.created_at).toBe("object");
+            expect(typeof article.votes).toBe("number");
+            expect(typeof article.article_img_url).toBe("string");
+            expect(typeof article.comment_count).toBe("number");
         });
       });
   });
@@ -57,19 +57,20 @@ describe("GET /api/articles", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
-      .then((res) => {
-        const articles = res.body.articles;
+      .then((response) => {
+        const articles = response.body.articles;
       });
+      ...(incomplete)
   });
   */
 
   //5
-  test("no article object has a 'body' property", () => {
+  test("article object does not have a 'body' property", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
-      .then((res) => {
-        res.body.articles.forEach((article) => {
+      .then((response) => {
+        response.body.articles.forEach((article) => {
           expect(article).not.toHaveProperty("body");
         });
       });
@@ -79,10 +80,10 @@ describe("GET /api/articles", () => {
   //6
   test("comment_count matches number of comments in database for an article", () => {
     return request(app)
-      .get("/api/articles")
+        .then((response) => {
       .expect(200)
-      .then((res) => {
-        const articles = res.body.articles;
+      .then((response) => {
+        const articles = response.body.articles;
         const checks = articles.map((article) => {
           const { article_id, comment_count } = article;
           return db
@@ -90,8 +91,8 @@ describe("GET /api/articles", () => {
               "SELECT COUNT(*)::int AS count FROM comments WHERE article_id = $1",
               [article_id]
             )
-            .then((dbRes) => {
-              expect(comment_count).toBe(dbRes.rows[0].count);
+            .then((dbResponse) => {
+              expect(comment_count).toBe(dbResponse.rows[0].count);
             });
         });
         return Promise.all(checks);

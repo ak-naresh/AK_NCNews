@@ -8,8 +8,8 @@ const { fetchTopics } = require("../models/topics.model");
 3. Sends the response wrapping array of topic
 */
 
-exports.getTopics = (req, res) => {
+exports.getTopics = (require, response) => {
   fetchTopics().then((topics) => {
-    res.status(200).send({ topics });
+    response.status(200).send({ topics });
   });
 };
