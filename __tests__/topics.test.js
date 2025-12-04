@@ -15,8 +15,8 @@ describe("GET /api/topics", () => {
       .get("/api/topics")
       .expect("Content-Type", /json/)
       .expect(200)
-      .then((res) => {
-        expect(res.body).toHaveProperty("topics");
+      .then((response) => {
+        expect(response.body).toHaveProperty("topics");
       });
   });
 
@@ -25,8 +25,8 @@ describe("GET /api/topics", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
-      .then((res) => {
-        expect(Array.isArray(res.body.topics)).toBe(true);
+      .then((response) => {
+        expect(Array.isArray(response.body.topics)).toBe(true);
       });
   });
 
@@ -35,8 +35,8 @@ describe("GET /api/topics", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
-      .then((res) => {
-        expect(res.body.topics.length).toBe(3);
+      .then((response) => {
+        expect(response.body.topics.length).toBe(3);
       });
   });
 
@@ -45,8 +45,8 @@ describe("GET /api/topics", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
-      .then((res) => {
-        expect(res.body.topics[0]).toEqual({
+      .then((response) => {
+        expect(response.body.topics[0]).toEqual({
           slug: "mitch",
           description: "The man, the Mitch, the legend",
         });
