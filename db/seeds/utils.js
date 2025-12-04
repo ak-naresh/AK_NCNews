@@ -1,4 +1,4 @@
-function mapCommentToArticleId(comments, articles) {
+function lookupArticleId(comments, articles) {
   /*
 mapCommentArticleId is needed as FK must reference the PK of another table ie article_id from articles table.
 
@@ -30,4 +30,4 @@ Converted article_title to article_id before inserting comments, for mapping-  o
   return mappedComment;
 }
 
-module.exports = mapCommentToArticleId;
+module.exports = lookupArticleId;

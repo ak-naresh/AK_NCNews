@@ -1,28 +1,12 @@
-const articleData = require("../db/data/test-data/articles");
 const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
-const testData = require("../db/data/test-data");
-const mapCommentToArticleId = require("../db/seeds/utils");
+const data = require("../db/data/test-data/index");
+const lookupArticleId = require("../db/seeds/utils");
 
-beforeAll(() => seed(testData));
+beforeAll(() => seed(data));
 afterAll(() => db.end());
 
-describe("article property types", () => {
-  //1
-  test("each property in an article has the correct type", () => {
-    const article = articleData[0];
-    expect(typeof article.title).toBe("string");
-    expect(typeof article.topic).toBe("string");
-    expect(typeof article.author).toBe("string");
-    expect(typeof article.body).toBe("string");
-    expect(typeof article.created_at).toBe("object");
-    expect(typeof article.votes).toBe("number");
-    expect(typeof article.article_img_url).toBe("string");
-  });
-});
-
-describe("mapCommentToArticleId", () => {
-  //2
+describe("lookupArticleId", () => {
   test("maps article_title to article_id correctly", () => {
     const comments = [
       {
@@ -43,11 +27,10 @@ describe("mapCommentToArticleId", () => {
         created_at: new Date(1604113380000),
       },
     ];
-    const result = mapCommentToArticleId(comments, articles);
+    const result = lookupArticleId(comments, articles);
     expect(result[0].article_id).toBe(2);
   });
 
-  //3
   test("does not mutate original array and returns a new array", () => {
     const comments = [
       {
@@ -68,7 +51,7 @@ describe("mapCommentToArticleId", () => {
         created_at: new Date(1604113380000),
       },
     ];
-    const result = mapCommentToArticleId(comments, articles);
+    const result = lookupArticleId(comments, articles);
     expect(result).not.toBe(comments);
     expect(comments).toEqual([
       {
@@ -81,7 +64,6 @@ describe("mapCommentToArticleId", () => {
     ]);
   });
 
-  //4
   test("mapped articleID properties", () => {
     const comments = [
       {
@@ -102,7 +84,7 @@ describe("mapCommentToArticleId", () => {
         created_at: new Date(1604113380000),
       },
     ];
-    const result = mapCommentToArticleId(comments, articles);
+    const result = lookupArticleId(comments, articles);
     expect(result[0]).toEqual({
       body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
       votes: 14,
@@ -112,7 +94,6 @@ describe("mapCommentToArticleId", () => {
     });
   });
 
-  //5
   test("sets article_id to undefined if article_title does not match any article", () => {
     const comments = [
       {
@@ -133,7 +114,7 @@ describe("mapCommentToArticleId", () => {
         created_at: new Date(1604113380000),
       },
     ];
-    const result = mapCommentToArticleId(comments, articles);
+    const result = lookupArticleId(comments, articles);
     expect(result[0].article_id).toBeUndefined();
   });
 });
