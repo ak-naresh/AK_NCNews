@@ -29,7 +29,16 @@ describe("mapCommentToArticleId", () => {
       },
     ];
     const result = mapCommentToArticleId(comments, articles);
-    expect(result).not.toBe(comments); // new array returned
+    expect(result).not.toBe(comments); // new array returned instead of mutating original
+    expect(comments).toEqual([
+      {
+        article_title: "Living in the shadow of a great man",
+        body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
+        votes: 14,
+        author: "butter_bridge",
+        created_at: new Date(1604113380000),
+      },
+    ]);
   });
 });
 
