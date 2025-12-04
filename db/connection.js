@@ -1,15 +1,11 @@
 const { Pool } = require("pg"); //Pool allows handling of multiple queries instead or reconnecting each time)
 
+const pool = new Pool();
+
 const ENV = process.env.NODE_ENV || "development";
+const path = `${__dirname}/../.env.${ENV}`;
+require("dotenv").config({ path: path });
 
-require("dotenv").config({ path: `${__dirname}/../.env.${ENV}` });
+console.log(process.env.PGDATABASE);
 
-const db = new Pool();
-
-if (!process.env.PGDATABASE) {
-  throw new Error("No PGDATABASE configured");
-} else {
-  console.log(`Connected to ${process.env.PGDATABASE}`);
-}
-
-module.exports = db;
+module.exports = pool;
