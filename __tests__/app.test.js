@@ -3,11 +3,15 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 const request = require("supertest");
 const app = require("../app");
+const { toBeSortedBy } = require("jest-sorted");
 
 beforeAll(() => seed(data));
 afterAll(() => db.end());
 
-//GET /api/topics
+/*
+GET /api/topics
+*/
+
 describe("GET /api/topics", () => {
   //1
   test("response has 'topics' property", () => {
@@ -54,7 +58,10 @@ describe("GET /api/topics", () => {
   });
 });
 
-//GET /api/articles
+/*
+GET /api/articles
+*/
+
 describe("GET /api/articles", () => {
   //1
   test("responds has 'articles' property", () => {
@@ -98,7 +105,6 @@ describe("GET /api/articles", () => {
   });
 */
 
-  /*
   //4
   test("articles are sorted by date descending", () => {
     return request(app)
@@ -106,11 +112,10 @@ describe("GET /api/articles", () => {
       .expect(200)
       .then((response) => {
         const articles = response.body.articles;
+        expect(articles).toBeSortedBy("created_at", { descending: true });
       });
-      .then('XYZ')
-    //...(incomplete)
   });
-*/
+
   //5
   test("article object does not have a 'body' property", () => {
     return request(app)
