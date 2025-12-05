@@ -48,7 +48,7 @@ GET /api/topics
 
 describe("GET /api/topics", () => {
   //1
-  test("response has 'topics' property", () => {
+  test("topics responds with 200 and correct content type", () => {
     return request(app)
       .get("/api/topics")
       .expect("Content-Type", /json/)
@@ -59,7 +59,7 @@ describe("GET /api/topics", () => {
   });
 
   //2
-  test("'topics' is an array", () => {
+  test("topics is an array", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
@@ -69,7 +69,7 @@ describe("GET /api/topics", () => {
   });
 
   //3
-  test("Array is expected length of 3", () => {
+  test("topics array is expected length of 3 (slug, description, img_url)", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
@@ -98,7 +98,7 @@ GET /api/articles
 
 describe("GET /api/articles", () => {
   //1
-  test("responds has 'articles' property", () => {
+  test("articles responds with 200 and correct content type", () => {
     return request(app)
       .get("/api/articles")
       .expect("Content-Type", /json/)
@@ -109,7 +109,7 @@ describe("GET /api/articles", () => {
   });
 
   //2
-  test("'articles' is an array", () => {
+  test("articles is an array", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -119,7 +119,36 @@ describe("GET /api/articles", () => {
   });
 
   //3
+  test("articles array is expected length of 13", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => {
+        expect(response.body.articles.length).toBe(13);
+      });
+  });
+
+  //4
   test("each article has required properties", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => {
+        response.body.articles.forEach((article) => {
+          expect(article).toHaveProperty("author");
+          expect(article).toHaveProperty("title");
+          expect(article).toHaveProperty("article_id");
+          expect(article).toHaveProperty("topic");
+          expect(article).toHaveProperty("created_at");
+          expect(article).toHaveProperty("votes");
+          expect(article).toHaveProperty("article_img_url");
+          expect(article).toHaveProperty("comment_count");
+        });
+      });
+  });
+
+  //5
+  test("each article property is correct type", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -137,7 +166,7 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //4
+  //6
   test("articles are sorted by date descending", () => {
     return request(app)
       .get("/api/articles")
@@ -148,8 +177,8 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //5
-  test("article object does not have a 'body' property", () => {
+  //7
+  test("article object does not have a body property", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -160,7 +189,7 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //6
+  //8
   test("comment_count matches number of comments in database for an article", async () => {
     const response = await request(app).get("/api/articles").expect(200);
     const articles = response.body.articles;
@@ -174,5 +203,72 @@ describe("GET /api/articles", () => {
       expect(comment_count).toBe(parseInt(dbResult.rows[0].count, 10));
     });
     await Promise.all(commentCountCheck);
+  });
+});
+
+/*
+GET /api/users
+*/
+
+describe("GET /api/users", () => {
+  //1
+  test("users responds with 200 and correct content type", () => {
+    return request(app)
+      .get("/api/users")
+      .expect("Content-Type", /json/)
+      .expect(200);
+  });
+
+  //2
+  test("response has users property", () => {
+    return request(app)
+      .get("/api/users")
+      .then((response) => {
+        expect(response.body).toHaveProperty("users");
+      });
+  });
+
+  //3
+  test("users is an array", () => {
+    return request(app)
+      .get("/api/users")
+      .then((response) => {
+        expect(Array.isArray(response.body.users)).toBe(true);
+      });
+  });
+
+  //4
+  test("users array is expected length of 4", () => {
+    return request(app)
+      .get("/api/users")
+      .then((response) => {
+        expect(response.body.users.length).toBe(4);
+      });
+  });
+
+  //5
+  test("each user has required properties", () => {
+    return request(app)
+      .get("/api/users")
+      .then((response) => {
+        response.body.users.forEach((user) => {
+          expect(user).toHaveProperty("username");
+          expect(user).toHaveProperty("name");
+          expect(user).toHaveProperty("avatar_url");
+        });
+      });
+  });
+
+  //6
+  test("each user property is correct type", () => {
+    return request(app)
+      .get("/api/users")
+      .then((response) => {
+        response.body.users.forEach((user) => {
+          expect(typeof user.username).toBe("string");
+          expect(typeof user.name).toBe("string");
+          expect(typeof user.avatar_url).toBe("string");
+        });
+      });
   });
 });

@@ -3,9 +3,9 @@ const { fetchArticles } = require("../models/articles.model");
 const { fetchArticleById } = require("../models/articles.model");
 
 /*
-1. Receives the request
-2. Calls the model
-3. Sends the response wrapping array of articles
+1. Receives request
+2. Calls model
+3. Sends response wrapping array of articles
 */
 
 function getArticles(request, response, next) {
@@ -16,9 +16,7 @@ function getArticles(request, response, next) {
     .then((articles) => {
       response.status(200).send({ articles });
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch(next);
 }
 
 function getArticleById(request, response, next) {

@@ -6,6 +6,7 @@ const {
   getArticles,
   getArticleById,
 } = require("./controllers/articles.controller");
+const { getUsers } = require("./controllers/users.controller");
 
 const app = express();
 
@@ -17,9 +18,10 @@ app.use(express.json()); //parses incoming JSON requests to populate request.bod
 /*
 Route-handler functions:
 */
-app.get("/api/topics", getTopics); //handles GET requests to /api/topics
-app.get("/api/articles", getArticles); //handles GET requests to /api/articles
-app.get("/api/articles/:article_id", getArticleById); //handles GET requests to /api/articles/:article_id
+app.get("/api/topics", getTopics); //route for GET requests for /api/topics to controller
+app.get("/api/articles", getArticles); //route for GET requests for /api/articles to controller
+app.get("/api/articles/:article_id", getArticleById); //route for GET requests for /api/articles/:article_id to controller
+app.get("/api/users", getUsers); //route for GET requests for /api/users to controller
 
 /*
 For requests to endpoints that do not exist:

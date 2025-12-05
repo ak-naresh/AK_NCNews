@@ -8,7 +8,7 @@ const db = require("../db/connection");
 - Function returns promise that resolves to array of article objects, including a comment_count property
 */
 
-const fetchArticles = () => {
+function fetchArticles() {
   return db
     .query(
       `
@@ -28,6 +28,7 @@ const fetchArticles = () => {
   `
     )
     .then((result) => {
+      //checks whether database query returns articles, and if none exists, it triggers an error indicating no articles exist, which is then handled by the error middleware.
       if (result.rows.length === 0) {
         const err = { status: 404, msg: "No articles found" };
         throw err;
@@ -38,7 +39,7 @@ const fetchArticles = () => {
         }));
       }
     });
-};
+}
 
 /*
 - fetchArticleById retrieves a single article from database by article_id
@@ -47,11 +48,11 @@ const fetchArticles = () => {
 - Function returns a promise that resolves to an array containing the matching article object (empty array if not found)
 */
 
-const fetchArticleById = (id) => {
+function fetchArticleById(id) {
   return db
     .query(`SELECT * FROM articles WHERE article_id = $1`, [id])
     .then(({ rows }) => rows);
-};
+}
 
 /*
 - fetchCommentsByDate retrieves all comments for a specific article, identified by article_id.
@@ -59,14 +60,14 @@ const fetchArticleById = (id) => {
 - Used parametric query to prevent SQL injection
 - Function returns a promise that resolves to an array containing the matching article object (empty array if not found)
 */
-const fetchCommentsByDate = (id) => {
+function fetchCommentsByDate(id) {
   return db
     .query(
       `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC`,
       [id]
     )
     .then(({ rows }) => rows);
-};
+}
 
 module.exports = {
   fetchArticles,

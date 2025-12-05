@@ -12,9 +12,7 @@ function getTopics(request, response, next) {
     .then((topics) => {
       response.status(200).send({ topics });
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch(next);
 }
 
 module.exports = { getTopics };
