@@ -5,8 +5,42 @@ const request = require("supertest");
 const app = require("../app");
 const { toBeSortedBy } = require("jest-sorted");
 
-beforeAll(() => seed(data));
+beforeEach(() => seed(data));
 afterAll(() => db.end());
+
+/*
+Error Handling
+*/
+
+describe("Error Handling", () => {
+  //1
+  test("400 responds with bad request for invalid id", () => {
+    return request(app)
+      .get("/api/articles/invalid-id")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad Request");
+      });
+  });
+
+  test("404 responds with not found for custom error", () => {
+    return request(app)
+      .get("/api/articles/9999")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Not Found");
+      });
+  });
+
+  test("500 responds with internal server error for generic error", () => {
+    return request(app)
+      .get("/api/articles?fail=true")
+      .expect(500)
+      .then((response) => {
+        expect(response.body.msg).toBe("Internal Server Error");
+      });
+  });
+});
 
 /*
 GET /api/topics
@@ -126,23 +160,19 @@ describe("GET /api/articles", () => {
       });
   });
 
-  /*
   //6
-  test("comment_count matches number of comments in database for an article", () => {
-    return request(app)
-        .then((response) => {
-      .expect(200)
-      .then((response) => {
-        const articles = response.body.articles;
-        const checks = articles.map((article) => {
-          const { article_id, comment_count } = article;
-          return db
-            .query(
-              "SELECT COUNT FROM comments WHERE article_id = $1",
-              [article_id]
-            )
-        return Promise.all(checks);
-      });
+  test("comment_count matches number of comments in database for an article", async () => {
+    const response = await request(app).get("/api/articles").expect(200);
+    const articles = response.body.articles;
+    const commentCountCheck = articles.map(async (article) => {
+      const article_id = article.article_id;
+      const comment_count = article.comment_count;
+      const dbResult = await db.query(
+        "SELECT COUNT(*) AS count FROM comments WHERE article_id = $1",
+        [article_id]
+      );
+      expect(comment_count).toBe(parseInt(dbResult.rows[0].count, 10));
+    });
+    await Promise.all(commentCountCheck);
   });
-  */
 });

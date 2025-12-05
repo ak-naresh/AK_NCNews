@@ -4,6 +4,7 @@ const db = require("../db/connection");
 - fetchArticles returns articles table with all properties and, includes COUNT comments column  for each article using LEFT JOIN
 - Articles are grouped by article_id
 - Results ordered by creation date in descending
+- Body property is excluded as per requirements
 - Function returns promise that resolves to array of article objects, including a comment_count property
 */
 
@@ -17,9 +18,9 @@ const fetchArticles = () => {
       articles.article_id,
       articles.topic,
       articles.created_at,
-      articles.votes,
+      articles.votes,                
       articles.article_img_url,
-      COUNT(comments.comment_id)::INT AS comment_count
+  COUNT(comments.comment_id) AS comment_count
     FROM articles
     LEFT JOIN comments ON articles.article_id = comments.article_id
     GROUP BY articles.article_id
@@ -31,7 +32,10 @@ const fetchArticles = () => {
         const err = { status: 404, msg: "No articles found" };
         throw err;
       } else {
-        return result.rows;
+        return result.rows.map((article) => ({
+          ...article,
+          comment_count: parseInt(article.comment_count, 10),
+        }));
       }
     });
 };

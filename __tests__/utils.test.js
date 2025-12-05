@@ -3,10 +3,11 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 const lookupArticleId = require("../db/seeds/utils");
 
-beforeAll(() => seed(data));
+beforeEach(() => seed(data));
 afterAll(() => db.end());
 
 describe("lookupArticleId", () => {
+  //1
   test("maps article_title to article_id correctly", () => {
     const comments = [
       {
@@ -31,6 +32,7 @@ describe("lookupArticleId", () => {
     expect(result[0].article_id).toBe(2);
   });
 
+  //2
   test("does not mutate original array and returns a new array", () => {
     const comments = [
       {
@@ -64,6 +66,7 @@ describe("lookupArticleId", () => {
     ]);
   });
 
+  //3
   test("mapped articleID properties", () => {
     const comments = [
       {
@@ -94,6 +97,7 @@ describe("lookupArticleId", () => {
     });
   });
 
+  //4
   test("sets article_id to undefined if article_title does not match any article", () => {
     const comments = [
       {
