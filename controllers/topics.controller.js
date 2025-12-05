@@ -7,10 +7,14 @@ const { fetchTopics } = require("../models/topics.model");
 3. Sends the response wrapping array of topic
 */
 
-function getTopics(require, response) {
-  fetchTopics().then((topics) => {
-    response.status(200).send({ topics });
-  });
+function getTopics(request, response, next) {
+  fetchTopics()
+    .then((topics) => {
+      response.status(200).send({ topics });
+    })
+    .catch((err) => {
+      next(err);
+    });
 }
 
 module.exports = { getTopics };

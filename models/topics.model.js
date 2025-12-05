@@ -6,9 +6,14 @@ Query selects both 'slug' && 'description' from topics table, so each topic obje
 */
 
 function fetchTopics() {
-  return db
-  .query(`SELECT slug, description FROM topics;`)
-    .then((result) => result.rows);
+  return db.query(`SELECT slug, description FROM topics;`).then((result) => {
+    if (result.rows.length === 0) {
+      const err = { status: 404, msg: "No topics found" };
+      throw err;
+    } else {
+      return result.rows;
+    }
+  });
 }
 
 module.exports = { fetchTopics };

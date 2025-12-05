@@ -84,7 +84,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  /*
   //3
   test("each article has required properties", () => {
     return request(app)
@@ -103,7 +102,6 @@ describe("GET /api/articles", () => {
         });
       });
   });
-*/
 
   //4
   test("articles are sorted by date descending", () => {
