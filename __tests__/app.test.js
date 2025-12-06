@@ -207,9 +207,35 @@ describe("GET /api/articles", () => {
 });
 
 /*
+GET /api/articles/:article_id
+*/
+describe("GET /api/articles/:article_id", () => {
+  //1
+  test("article_id responds with 200 and correct content type", () => {
+    return request(app)
+      .get("/api/articles/1")
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toHaveProperty("article");
+        const article = response.body.article;
+        expect(article).toHaveProperty("article_id");
+      });
+  });
+
+  //2
+  test("article is an object", () => {
+    return request(app)
+      .get("/api/articles/1")
+      .expect(200)
+      .then((response) => {
+        expect(typeof response.body.article).toBe("object");
+      });
+  });
+});
+
+/*
 GET /api/users
 */
-
 describe("GET /api/users", () => {
   //1
   test("users responds with 200 and correct content type", () => {
