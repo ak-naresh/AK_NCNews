@@ -120,14 +120,14 @@ psql -d nc_news_test
 
 # Custom errors
 
-- Custom errors are handled by `handleCustomErrors`, allowing for more descriptive error responses.
+- Custom errors are handled by `handleCustomErrors`.
 
 # PSQL errors
 
-- `22P02` are handled by `handleBadRequest`, returning status 400 and a clear message.
+- `22P02` are handled by `handleBadRequest`, returning status 400 with message.
 
 # Server errors
 
-- Unexpected errors are logged, returning status 500 via `handleServerErrors`.
+- Unexpected errors are logged, returning status 500 with message via `handleServerErrors`.
 
 ---
