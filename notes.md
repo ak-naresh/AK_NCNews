@@ -62,6 +62,8 @@ Requirements:
 
 ---
 
+## Pool is used to keep connection open instead of reconnecting each time.
+
 ## List of error status codes
 
 - `200 OK`
