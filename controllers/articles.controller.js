@@ -16,8 +16,8 @@ function getArticles(request, response, next) {
     .then((articles) => {
       response.status(200).send({ articles });
     })
-    .catch((err) => {
-      next(err);
+    .catch((error) => {
+      next(error);
     });
 }
 
@@ -38,8 +38,8 @@ function getArticleById(request, response, next) {
       }
       response.status(200).send({ article: articles[0] });
     })
-    .catch((err) => {
-      next(err);
+    .catch((error) => {
+      next(error);
     });
 }
 
