@@ -23,6 +23,7 @@ describe("Error Handling", () => {
       });
   });
 
+  //2
   test("404 responds with not found for custom error", () => {
     return request(app)
       .get("/api/articles/9999")
@@ -32,6 +33,7 @@ describe("Error Handling", () => {
       });
   });
 
+  //3
   test("500 responds with internal server error for generic error", () => {
     return request(app)
       .get("/api/articles?fail=true")
