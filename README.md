@@ -60,7 +60,7 @@ psql -d nc_news_test
 
 ---
 
-## List of all functions (to avoid confusion again)
+## List of all functions
 
 # articles.controller.js
 
@@ -79,7 +79,7 @@ psql -d nc_news_test
 - `getUsers(request, response, next)`
   Controller: Handles GET /api/users, fetches all users and sends as response.
 
-## articles.model.js
+# articles.model.js
 
 - `fetchArticles()`
   Model: Retrieves all articles with comment counts, excludes article body.
@@ -88,24 +88,35 @@ psql -d nc_news_test
 - `fetchCommentsByDate(id)`
   Model: Retrieves all comments for a given article, ordered by date descending.
 
-## topics.model.js
+# topics.model.js
 
 - `fetchTopics()`
   Model: Retrieves all topics from the database.
 
-## users.model.js
+# users.model.js
 
 - `selectUsers()`
   Model: Retrieves all users from the database.
 
-## seed.js
+# seed.js
 
 - `seed({ topicData, userData, articleData, commentData })`
   DB Seeding: drop tables, creates tables, and inserts all provided data into tables
 
-## utils.js
+# utils.js
 
 - `mapArticleTitleToId(comments, articles)`
   Utility: Maps comment.article_title to correct article_id for seeding comments
 
 ---
+
+## List of error status codes
+
+- `200 OK`
+  Status: Successful GET request, returns data
+- `400 Bad Request`
+  Status: Invalid input, e.g. wrong data type
+- `404 Not Found`
+  Status: Resource not found or endpoint does not exist
+- `500 Internal Server Error`
+  Status: Unexpected server error
