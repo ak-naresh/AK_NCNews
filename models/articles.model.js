@@ -30,8 +30,8 @@ const fetchArticles = () => {
     .then((result) => {
       //checks whether database query returns articles, and if none exists, it triggers an error indicating no articles exist, which is then handled by the error middleware.
       if (result.rows.length === 0) {
-        const err = { status: 404, msg: "No articles found" };
-        throw err;
+        const error = { status: 404, msg: "No articles found" };
+        return Promise.reject(error);
       } else {
         return result.rows.map((article) => ({
           ...article,
