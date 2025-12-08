@@ -6,7 +6,9 @@ function getUsers(request, response, next) {
     .then((users) => {
       response.status(200).send({ users });
     })
-    .catch(next);
+    .catch((error) => {
+      next(error);
+    });
 }
 
 module.exports = { getUsers };

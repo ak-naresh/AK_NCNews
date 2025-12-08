@@ -16,7 +16,9 @@ function getArticles(request, response, next) {
     .then((articles) => {
       response.status(200).send({ articles });
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 }
 
 function getArticleById(request, response, next) {
@@ -36,7 +38,9 @@ function getArticleById(request, response, next) {
       }
       response.status(200).send({ article: articles[0] });
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 }
 
 module.exports = { getArticles, getArticleById };
