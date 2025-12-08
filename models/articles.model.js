@@ -30,7 +30,7 @@ function fetchArticles() {
     .then((result) => {
       //checks whether database query returns articles, and if none exists, it triggers an error indicating no articles exist, which is then handled by the error middleware.
       if (result.rows.length === 0) {
-        return Promise.reject({ status: 404, msg: "Path Not Found" });
+        return Promise.reject({ status: 404, message: "Path Not Found" });
       } else {
         return result.rows.map((article) => ({
           ...article,

@@ -37,7 +37,7 @@ app.get("/api/users", getUsers); //route for GET requests for /api/users to cont
 Error-handling middleware:
 */
 app.use(handlePathNotFound); //Handles unknown endpoints (404)
-app.use(handleCustomErrors); // Handles custom errors with status/msg
+app.use(handleCustomErrors); // Handles custom errors with status/message
 app.use(handleBadRequest); // Handles PSQL bad request errors
 app.use(handleServerErrors); // Handles all other server errors
 

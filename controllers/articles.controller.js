@@ -21,7 +21,7 @@ function getArticleById(request, response, next) {
   }
   return articlesModel.lookupArticleId(article_id).then((articles) => {
     if (articles.length === 0) {
-      return next({ status: 404, msg: "Not Found" });
+  return next({ status: 404, message: "Not Found" });
     }
     response.status(200).send({ article: articles[0] });
   });
@@ -34,7 +34,7 @@ function getCommentsByArticleId(request, response, next) {
   }
   return articlesModel.fetchCommentsByDate(article_id).then((comments) => {
     if (comments.length <= 0) {
-      return next({ status: 404, msg: "Not Found" });
+  return next({ status: 404, message: "Not Found" });
     }
     response.status(200).send({ comments });
   });

@@ -19,7 +19,7 @@ describe("Error Handling", () => {
       .get("/api/articles/invalid-id")
       .expect(400)
       .then((response) => {
-        expect(response.body.msg).toBe("Bad Request");
+  expect(response.body.message).toBe("Bad Request");
       });
   });
 
@@ -29,7 +29,7 @@ describe("Error Handling", () => {
       .get("/api/nonexistent-endpoint")
       .expect(404)
       .then((response) => {
-        expect(response.body.msg).toBe("Path Not Found");
+  expect(response.body.message).toBe("Path Not Found");
       });
   });
 
@@ -39,7 +39,7 @@ describe("Error Handling", () => {
       .get("/api/articles/9999")
       .expect(404)
       .then((response) => {
-        expect(response.body.msg).toBe("Not Found");
+  expect(response.body.message).toBe("Not Found");
       });
   });
 });
@@ -314,7 +314,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       .get("/api/articles/invalid-id/comments")
       .expect(400)
       .then((response) => {
-        expect(response.body.msg).toBe("Bad Request");
+  expect(response.body.message).toBe("Bad Request");
       });
   });
 
@@ -324,7 +324,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       .get("/api/articles/9999/comments")
       .expect(404)
       .then((response) => {
-        expect(response.body.msg).toBe("Not Found");
+  expect(response.body.message).toBe("Not Found");
       });
   });
 });
