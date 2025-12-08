@@ -60,6 +60,7 @@ const lookupArticleId = (id) => {
 - Used parametric query to prevent SQL injection
 - Function returns a promise that resolves to an array containing the matching article object (empty array if not found)
 */
+
 const fetchCommentsByDate = (id) => {
   return db
     .query(

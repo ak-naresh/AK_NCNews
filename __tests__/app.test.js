@@ -11,7 +11,6 @@ afterAll(() => db.end());
 /*
 Error Handling
 */
-
 describe("Error Handling", () => {
   //1
   test("400 responds with bad request for invalid id", () => {
@@ -47,7 +46,6 @@ describe("Error Handling", () => {
 /*
 GET /api/topics
 */
-
 describe("GET /api/topics", () => {
   //1
   test("topics responds with 200 and correct content type", () => {
@@ -97,7 +95,6 @@ describe("GET /api/topics", () => {
 /*
 GET /api/articles
 */
-
 describe("GET /api/articles", () => {
   //1
   test("articles responds with 200 and correct content type", () => {
