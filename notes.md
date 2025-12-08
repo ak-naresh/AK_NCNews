@@ -59,3 +59,28 @@ Requirements:
 - Double check data provided for each table. You might need to manipulate data so it's in the correct format for each insert. The keys on each object in the data may not line up with the column names you created on the previous task.
 - Build a utils function in utils.js and fully test any functions created.
 - Use utility functions to transform data for comments seeding table (i.e., mapping article titles to IDs for comments).
+
+---
+
+## List of error status codes
+
+- `200 OK`
+  Status: Successful GET request, returns data
+- `400 Bad Request`
+  Status: Invalid input, e.g. wrong data type
+- `404 Not Found`
+  Status: Resource not found or endpoint does not exist
+- `500 Internal Server Error`
+  Status: Unexpected server error
+
+1. Request comes in and controller checks request
+2. If something is wrong (like an invalid id), it creates an error object:
+   - Sets `error.code` to identify specific type of error (e.g., "22P02" PSQL error for invalid id).
+   - Sets `error.status` for intended HTTP status (e.g., 400 or 404).
+   - Passes error to the next middleware with `next(error)`.
+3. Error-handling middleware receives the error:
+   - It looks at `error.code` to detect database errors.
+   - It looks at `error.status` to tell middleware which HTTP status to use.
+4. Middleware uses `response.status()` to send the HTTP status code to the client.
+
+---

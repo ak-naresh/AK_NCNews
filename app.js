@@ -5,6 +5,7 @@ const { getTopics } = require("./controllers/topics.controller");
 const {
   getArticles,
   getArticleById,
+  getCommentsByArticleId,
 } = require("./controllers/articles.controller");
 const { getUsers } = require("./controllers/users.controller");
 
@@ -21,13 +22,14 @@ Route-handler functions:
 app.get("/api/topics", getTopics); //route for GET requests for /api/topics to controller
 app.get("/api/articles", getArticles); //route for GET requests for /api/articles to controller
 app.get("/api/articles/:article_id", getArticleById); //route for GET requests for /api/articles/:article_id to controller
+app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //route for GET requests for /api/articles/:article_id/comments to controller
 app.get("/api/users", getUsers); //route for GET requests for /api/users to controller
 
 /*
 For requests to endpoints that do not exist:
 */
 app.use((request, response, next) => {
-  next({ status: 404 }); //detects requests to unknown endpoints and instead of responding calls next with 404 && passes the 404s to the below error-handling middleware which catches it and sends the appropriate 404 response.
+  next({ status: 404 }); // Detects requests to unknown endpoints. Instead of responding directly with a 404, it passes the error to the error-handling middleware below for centralised error handling and consistent responses. The error-handling middleware then sends the appropriate 404 response.
 });
 
 /*

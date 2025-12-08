@@ -23,10 +23,10 @@ function getArticles(request, response, next) {
 
 function getArticleById(request, response, next) {
   const { article_id } = request.params;
-
   if (isNaN(Number(article_id))) {
+    //isNaN checks if article_id is not a number
     const error = new Error("Bad Request");
-    error.code = "22P02"; //check if article_id is not a number
+    error.code = "22P02";
     return next(error);
   }
   lookupArticleId(article_id)
@@ -43,4 +43,27 @@ function getArticleById(request, response, next) {
     });
 }
 
-module.exports = { getArticles, getArticleById };
+const { fetchCommentsByDate } = require("../models/articles.model");
+
+function getCommentsByArticleId(request, response, next) {
+  const { article_id } = request.params;
+  if (isNaN(Number(article_id))) {
+    const error = new Error("Bad Request");
+    error.code = "22P02";
+    return next(error);
+  }
+  fetchCommentsByDate(article_id)
+    .then((comments) => {
+      if (comments.length <= 0) {
+        const error = new Error("Not Found");
+        error.status = 404;
+        return next(error);
+      }
+      response.status(200).send({ comments });
+    })
+    .catch((error) => {
+      next(error);
+    });
+}
+
+module.exports = { getArticles, getArticleById, getCommentsByArticleId };

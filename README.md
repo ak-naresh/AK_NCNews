@@ -68,6 +68,8 @@ psql -d nc_news_test
   Controller: Handles GET /api/articles, fetches all articles and sends as response.
 - `getArticleById(request, response, next)`
   Controller: Handles GET /api/articles/:article_id, fetches a single article by ID.
+- `getCommentsByArticleId(request, response, next)`
+  Controller: Handles GET /api/articles/:article_id/comments, fetches all comments for a given article, ordered by most recent first.
 
 # topics.controller.js
 
@@ -120,3 +122,5 @@ psql -d nc_news_test
   Status: Resource not found or endpoint does not exist
 - `500 Internal Server Error`
   Status: Unexpected server error
+
+---
