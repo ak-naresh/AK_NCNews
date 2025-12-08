@@ -51,7 +51,9 @@ const fetchArticles = () => {
 const lookupArticleId = (id) => {
   return db
     .query(`SELECT * FROM articles WHERE article_id = $1`, [id])
-    .then(({ rows }) => rows);
+    .then(({ rows }) => {
+      return rows;
+    });
 };
 
 /*
@@ -67,7 +69,9 @@ const fetchCommentsByDate = (id) => {
       `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC`,
       [id]
     )
-    .then(({ rows }) => rows);
+    .then(({ rows }) => {
+      return rows;
+    });
 };
 
 module.exports = {
