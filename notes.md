@@ -73,6 +73,8 @@ Requirements:
 - `500 Internal Server Error`
   Status: Unexpected server error
 
+-
+
 1. Request comes in and controller checks request
 2. If something is wrong (like an invalid id), it creates an error object:
    - Sets `error.code` to identify specific type of error (e.g., "22P02" PSQL error for invalid id).
@@ -84,3 +86,5 @@ Requirements:
 4. Middleware uses `response.status()` to send the HTTP status code to the client.
 
 ---
+
+- removed all instances of '.catch((error) => { next(error); }' as Express 5 handles this automatically

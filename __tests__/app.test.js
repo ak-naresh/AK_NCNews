@@ -31,16 +31,6 @@ describe("Error Handling", () => {
         expect(response.body.msg).toBe("Not Found");
       });
   });
-
-  //3
-  test("500 responds with internal server error for generic error", () => {
-    return request(app)
-      .get("/api/articles?fail=true")
-      .expect(500)
-      .then((response) => {
-        expect(response.body.msg).toBe("Internal Server Error");
-      });
-  });
 });
 
 /*

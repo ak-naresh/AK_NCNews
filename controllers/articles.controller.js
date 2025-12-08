@@ -9,16 +9,9 @@ const { lookupArticleId } = require("../models/articles.model");
 */
 
 function getArticles(request, response, next) {
-  if (request.query.fail === "true") {
-    return next(new Error());
-  }
-  fetchArticles()
-    .then((articles) => {
-      response.status(200).send({ articles });
-    })
-    .catch((error) => {
-      next(error);
-    });
+  return fetchArticles().then((articles) => {
+    response.status(200).send({ articles });
+  });
 }
 
 function getArticleById(request, response, next) {
@@ -27,20 +20,16 @@ function getArticleById(request, response, next) {
     //isNaN checks if article_id is not a number
     const error = new Error("Bad Request");
     error.code = "22P02";
-    return next(error);
+    throw error;
   }
-  lookupArticleId(article_id)
-    .then((articles) => {
-      if (articles.length === 0) {
-        const error = new Error("Not Found");
-        error.status = 404;
-        return next(error);
-      }
-      response.status(200).send({ article: articles[0] });
-    })
-    .catch((error) => {
-      next(error);
-    });
+  return lookupArticleId(article_id).then((articles) => {
+    if (articles.length === 0) {
+      const error = new Error("Not Found");
+      error.status = 404;
+      throw error;
+    }
+    response.status(200).send({ article: articles[0] });
+  });
 }
 
 const { fetchCommentsByDate } = require("../models/articles.model");
@@ -50,20 +39,16 @@ function getCommentsByArticleId(request, response, next) {
   if (isNaN(Number(article_id))) {
     const error = new Error("Bad Request");
     error.code = "22P02";
-    return next(error);
+    throw error;
   }
-  fetchCommentsByDate(article_id)
-    .then((comments) => {
-      if (comments.length <= 0) {
-        const error = new Error("Not Found");
-        error.status = 404;
-        return next(error);
-      }
-      response.status(200).send({ comments });
-    })
-    .catch((error) => {
-      next(error);
-    });
+  return fetchCommentsByDate(article_id).then((comments) => {
+    if (comments.length <= 0) {
+      const error = new Error("Not Found");
+      error.status = 404;
+      throw error;
+    }
+    response.status(200).send({ comments });
+  });
 }
 
 module.exports = { getArticles, getArticleById, getCommentsByArticleId };
