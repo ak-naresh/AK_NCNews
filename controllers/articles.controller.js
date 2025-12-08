@@ -1,11 +1,5 @@
 const articlesModel = require("../models/articles.model");
 
-/*
-1. Receives request
-2. Calls model
-3. Sends response wrapping array of articles
-*/
-
 function getArticles(request, response, next) {
   return articlesModel.fetchArticles().then((articles) => {
     response.status(200).send({ articles });
@@ -15,7 +9,6 @@ function getArticles(request, response, next) {
 function getArticleById(request, response, next) {
   const { article_id } = request.params;
   if (isNaN(Number(article_id))) {
-    //isNaN checks if article_id is not a number
     return next({ code: "22P02" });
   }
   return articlesModel.lookupArticleId(article_id).then((articles) => {

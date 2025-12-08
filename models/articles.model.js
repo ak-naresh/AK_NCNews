@@ -2,10 +2,8 @@ const db = require("../db/connection");
 
 /*
 - fetchArticles returns articles table with all properties and, includes COUNT comments column  for each article using LEFT JOIN
-- Articles are grouped by article_id
-- Results ordered by creation date in descending
-- Body property is excluded as per requirements
-- Function returns promise that resolves to array of article objects, including a comment_count property
+- Articles are grouped by article_id and ordered by creation date in descending order
+- Returns promise that resolves to array of article objects, including comment_count property, and Body property is excluded as per requirements
 */
 
 function fetchArticles() {
@@ -28,7 +26,7 @@ function fetchArticles() {
   `
     )
     .then((result) => {
-      //checks whether database query returns articles, and if none exists, it triggers an error indicating no articles exist, which is then handled by the error middleware.
+      //checks whether database query returns articles- if none exists, triggers error indicating no articles exist, which is then handled by the error middleware.
       if (result.rows.length === 0) {
         return Promise.reject({ status: 404, message: "Path Not Found" });
       } else {

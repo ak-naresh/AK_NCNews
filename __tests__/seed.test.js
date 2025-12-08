@@ -22,6 +22,7 @@ describe("seed", () => {
         });
     });
 
+    //1
     test("topics table has slug column as varying character", () => {
       return db
         .query(
@@ -36,6 +37,7 @@ describe("seed", () => {
         });
     });
 
+    //2
     test("topics table has slug column as the primary key", () => {
       return db
         .query(
@@ -51,6 +53,7 @@ describe("seed", () => {
         });
     });
 
+    //3
     test("topics table has description column as varying character", () => {
       return db
         .query(
@@ -65,6 +68,7 @@ describe("seed", () => {
         });
     });
 
+    //4
     test("topics table has img_url column of varying character of max length 1000", () => {
       return db
         .query(
@@ -82,6 +86,7 @@ describe("seed", () => {
   });
 
   describe("users table", () => {
+    //1
     test("users table exists", () => {
       return db
         .query(
@@ -97,6 +102,7 @@ describe("seed", () => {
         });
     });
 
+    //2
     test("users table has username column of varying character", () => {
       return db
         .query(
@@ -111,6 +117,7 @@ describe("seed", () => {
         });
     });
 
+    //3
     test("users table has username column as the primary key", () => {
       return db
         .query(
@@ -126,6 +133,7 @@ describe("seed", () => {
         });
     });
 
+    //4
     test("users table has name column as varying character", () => {
       return db
         .query(
@@ -140,6 +148,7 @@ describe("seed", () => {
         });
     });
 
+    //5
     test("users table has avatar_url column of varying character of max length 1000", () => {
       return db
         .query(
@@ -156,6 +165,7 @@ describe("seed", () => {
   });
 
   describe("articles table", () => {
+    //1
     test("articles table exists", () => {
       return db
         .query(
@@ -171,6 +181,7 @@ describe("seed", () => {
         });
     });
 
+    //2
     test("articles table has article_id column as a serial", () => {
       return db
         .query(
@@ -188,6 +199,7 @@ describe("seed", () => {
         });
     });
 
+    //3
     test("articles table has article_id column as the primary key", () => {
       return db
         .query(
@@ -203,6 +215,7 @@ describe("seed", () => {
         });
     });
 
+    //4
     test("articles table has title column as varying character", () => {
       return db
         .query(
@@ -217,6 +230,7 @@ describe("seed", () => {
         });
     });
 
+    //5
     test("articles table has topic column as varying character", () => {
       return db
         .query(
@@ -231,6 +245,7 @@ describe("seed", () => {
         });
     });
 
+    //6
     test("topic column references a slug from the topics table", () => {
       return db
         .query(
@@ -253,6 +268,7 @@ describe("seed", () => {
         });
     });
 
+    //7
     test("articles table has author column as varying character", () => {
       return db
         .query(
@@ -267,6 +283,7 @@ describe("seed", () => {
         });
     });
 
+    //8
     test("author column references a username from the users table", () => {
       return db
         .query(
@@ -289,6 +306,7 @@ describe("seed", () => {
         });
     });
 
+    //9
     test("articles table has body column as text", () => {
       return db
         .query(
@@ -303,6 +321,7 @@ describe("seed", () => {
         });
     });
 
+    //10
     test("articles table has created_at column as timestamp", () => {
       return db
         .query(
@@ -317,6 +336,7 @@ describe("seed", () => {
         });
     });
 
+    //11
     test("created_at column has default value of the current timestamp", () => {
       return db
         .query(
@@ -330,6 +350,7 @@ describe("seed", () => {
         });
     });
 
+    //12
     test("articles table has votes column as integer", () => {
       return db
         .query(
@@ -344,6 +365,7 @@ describe("seed", () => {
         });
     });
 
+    //13
     test("votes column has default value of 0", () => {
       return db
         .query(
@@ -357,6 +379,7 @@ describe("seed", () => {
         });
     });
 
+    //14
     test("articles table has article_img_url column of varying character of max length 1000", () => {
       return db
         .query(
@@ -374,6 +397,7 @@ describe("seed", () => {
   });
 
   describe("comments table", () => {
+    //1
     test("comments table exists", () => {
       return db
         .query(
@@ -389,6 +413,7 @@ describe("seed", () => {
         });
     });
 
+    //2
     test("comments table has comment_id column as serial", () => {
       return db
         .query(
@@ -406,6 +431,7 @@ describe("seed", () => {
         });
     });
 
+    //3
     test("comments table has comment_id column as the primary key", () => {
       return db
         .query(
@@ -421,6 +447,7 @@ describe("seed", () => {
         });
     });
 
+    //4
     test("comments table has article_id column as integer", () => {
       return db
         .query(
@@ -435,6 +462,7 @@ describe("seed", () => {
         });
     });
 
+    //5
     test("article_id column references an article from the articles table", () => {
       return db
         .query(
@@ -457,6 +485,7 @@ describe("seed", () => {
         });
     });
 
+    //6
     test("comments table has body column as text", () => {
       return db
         .query(
@@ -471,6 +500,7 @@ describe("seed", () => {
         });
     });
 
+    //7
     test("comments table has votes column as integer", () => {
       return db
         .query(
@@ -485,6 +515,7 @@ describe("seed", () => {
         });
     });
 
+    //8
     test("votes column has default value of 0", () => {
       return db
         .query(
@@ -498,6 +529,7 @@ describe("seed", () => {
         });
     });
 
+    //9
     test("comments table has an author column as varying character", () => {
       return db
         .query(
@@ -512,6 +544,7 @@ describe("seed", () => {
         });
     });
 
+    //10
     test("author column references a username from the users table", () => {
       return db
         .query(
@@ -534,6 +567,7 @@ describe("seed", () => {
         });
     });
 
+    //11
     test("comments table has created_at column as timestamp", () => {
       return db
         .query(
@@ -548,6 +582,7 @@ describe("seed", () => {
         });
     });
 
+    //12
     test("created_at column has default value of the current timestamp", () => {
       return db
         .query(
@@ -564,6 +599,7 @@ describe("seed", () => {
 });
 
 describe("data insertion", () => {
+  //1
   test("topics data has been inserted correctly", () => {
     return db.query(`SELECT * FROM topics;`).then(({ rows: topics }) => {
       expect(topics).toHaveLength(3);
@@ -575,6 +611,7 @@ describe("data insertion", () => {
     });
   });
 
+  //2
   test("users data has been inserted correctly", () => {
     return db.query(`SELECT * FROM users;`).then(({ rows: users }) => {
       expect(users).toHaveLength(4);
@@ -586,6 +623,7 @@ describe("data insertion", () => {
     });
   });
 
+  //3
   test("articles data has been inserted correctly", () => {
     return db.query(`SELECT * FROM articles;`).then(({ rows: articles }) => {
       expect(articles).toHaveLength(13);
@@ -602,6 +640,7 @@ describe("data insertion", () => {
     });
   });
 
+  //4
   test("comments data has been inserted correctly", () => {
     return db.query(`SELECT * FROM comments;`).then(({ rows: comments }) => {
       expect(comments).toHaveLength(18);

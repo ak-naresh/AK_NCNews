@@ -20,24 +20,23 @@ const app = express();
 ---
 Middleware:
 */
-app.use(express.json()); //parses incoming JSON requests to populate request.body
+app.use(express.json()); //parses JSON requests to populate request.body
 
 /*
 ---
 Route-handler mappings:
 */
-app.get("/api/topics", getTopics); //route for GET requests for /api/topics to controller
-app.get("/api/articles", getArticles); //route for GET requests for /api/articles to controller
-app.get("/api/articles/:article_id", getArticleById); //route for GET requests for /api/articles/:article_id to controller
-app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //route for GET requests for /api/articles/:article_id/comments to controller
-app.get("/api/users", getUsers); //route for GET requests for /api/users to controller
-
+app.get("/api/topics", getTopics); //route for GET requests for topics controller
+app.get("/api/articles", getArticles); //route for GET requests for articles controller
+app.get("/api/articles/:article_id", getArticleById); //route for GET requests for article by ID controller
+app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //route for GET requests for comments by article ID controller
+app.get("/api/users", getUsers); //route for GET requests for users controller
 /*
 ---
 Error-handling middleware:
 */
 app.use(handlePathNotFound); //Handles unknown endpoints (404)
-app.use(handleCustomErrors); // Handles custom errors with status/message
+app.use(handleCustomErrors); // Handles custom errors
 app.use(handleBadRequest); // Handles PSQL bad request errors
 app.use(handleServerErrors); // Handles all other server errors
 
