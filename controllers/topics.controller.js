@@ -1,4 +1,3 @@
-const db = require("../db/connection");
 const { fetchTopics } = require("../models/topics.model");
 
 /* 

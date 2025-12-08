@@ -1,4 +1,3 @@
-const db = require("../db/connection");
 const { selectUsers } = require("../models/users.model");
 
 function getUsers(request, response, next) {
