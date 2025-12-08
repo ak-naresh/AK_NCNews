@@ -1,6 +1,6 @@
 ### NC News Backend
 
-This project is a RESTful API for NC News platform, built with Node.js and Express. Providings endpoints for articles, topics, users, and comments, using PostgreSQL for data storage, and the API supporting CRUD operations.
+This project is a RESTful API for NC News platform, built with Node.js and Express. Providings endpoints for articles, topics, users, and comments, using PSQL for data storage, and the API supporting CRUD operations.
 
 ---
 
@@ -112,15 +112,52 @@ psql -d nc_news_test
 
 ---
 
-## List of error status codes
+## Error Handling
 
-- `200 OK`
-  Status: Successful GET request, returns data
-- `400 Bad Request`
-  Status: Invalid input, e.g. wrong data type
-- `404 Not Found`
-  Status: Resource not found or endpoint does not exist
-- `500 Internal Server Error`
-  Status: Unexpected server error
+
+# Unknown endpoints
+ Unknown endpoints are handled by `handlePathNotFound`, returning status 404 with message.
+
+# Custom errors 
+Custom errors are handled by `handleCustomErrors`, allowing for more descriptive error responses.
+
+# PSQL errors** (e.g., invalid input, code `22P02`) are handled by `handleBadRequest`, returning status 400 and a clear message.
+- **Server errors** (unexpected errors) are logged and return status 500 via `handleServerErrors`.
+
+### Error-handling middleware order in `app.js`:
+
+```js
+const {
+  handlePathNotFound,
+  handleCustomErrors,
+  handleBadRequest,
+  handleServerErrors,
+} = require("./errors");
+app.use(handlePathNotFound); // Handles unknown endpoints (404)
+app.use(handleCustomErrors); // Handles custom errors with status/msg
+app.use(handleBadRequest); // Handles PSQL bad request errors
+app.use(handleServerErrors); // Handles all other server errors
+```
+
+### How to Use Error Handling in Controllers/Models
+
+- Throw or reject with custom error objects in models (e.g., `{ status: 404, msg: "No user found" }`).
+- Return promises in controllers so Express 5 can automatically forward errors.
+- Use `.catch(next)` in controllers if you need to log, transform, or filter errors before passing to middleware.
+
+### Testing Error Responses
+
+- Test for error status codes and messages in your test files (e.g., `utils.test.js`, `app.test.js`).
+- Example test for invalid input:
+  ```js
+  test("status:400, responds with an error message when passed a bad user ID", () => {
+    return request(app)
+      .get("/api/users/notAnID")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  ```
 
 ---

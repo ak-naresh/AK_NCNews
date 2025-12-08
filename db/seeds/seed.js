@@ -1,6 +1,6 @@
 const db = require("../connection");
 const format = require("pg-format");
-const lookupArticleId = require("./utils");
+const mapCommentToArticleId = require("./utils");
 
 const seed = ({ topicData, userData, articleData, commentData }) => {
   //drop table if exists (must be in reverse order) & create tables in order of dependencies
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS topics;
             //inserteDArticles stores array from rows for mapping
 
             //mappedComment from utils, returns anew array of comments instead of mutating original and assiginss to correct aritcle_id instead of article_title
-            const mappedComments = lookupArticleId(
+            const mappedComments = mapCommentToArticleId(
               commentData,
               insertedArticles
             );
@@ -136,7 +136,6 @@ to check again via terminal, in psql, connect to nc_news_test , then to check ty
 SELECT c.comment_id, c.article_id, a.title
 FROM comments c
 JOIN articles a ON c.article_id = a.article_id;
-
 */
 
 module.exports = seed;

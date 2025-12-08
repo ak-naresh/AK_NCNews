@@ -1,6 +1,7 @@
 const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
+
 const request = require("supertest");
 const app = require("../app");
 const { toBeSortedBy } = require("jest-sorted");
@@ -13,7 +14,7 @@ Error Handling
 */
 describe("Error Handling", () => {
   //1
-  test("400 responds with bad request for invalid id", () => {
+  test("400 responds with Bad Request for invalid id", () => {
     return request(app)
       .get("/api/articles/invalid-id")
       .expect(400)
@@ -23,7 +24,17 @@ describe("Error Handling", () => {
   });
 
   //2
-  test("404 responds with not found for custom error", () => {
+  test("404 responds with Path Not Found for unknown endpoint", () => {
+    return request(app)
+      .get("/api/nonexistent-endpoint")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("Path Not Found");
+      });
+  });
+
+  //3
+  test("404 responds with custom error for missing article", () => {
     return request(app)
       .get("/api/articles/9999")
       .expect(404)

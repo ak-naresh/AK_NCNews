@@ -8,8 +8,7 @@ Query selects both 'slug' && 'description' from topics table, so each topic obje
 function fetchTopics() {
   return db.query(`SELECT slug, description FROM topics;`).then((result) => {
     if (result.rows.length === 0) {
-      const error = { status: 404, msg: "No topics found" };
-      return Promise.reject(error);
+      return Promise.reject({ status: 404, msg: "Path Not Found" });
     } else {
       return result.rows;
     }
