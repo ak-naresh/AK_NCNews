@@ -249,6 +249,7 @@ describe("GET /api/users", () => {
   test("response has users property", () => {
     return request(app)
       .get("/api/users")
+      .expect(200)
       .then((response) => {
         expect(response.body).toHaveProperty("users");
       });
@@ -258,6 +259,7 @@ describe("GET /api/users", () => {
   test("users is an array", () => {
     return request(app)
       .get("/api/users")
+      .expect(200)
       .then((response) => {
         expect(Array.isArray(response.body.users)).toBe(true);
       });
@@ -267,6 +269,7 @@ describe("GET /api/users", () => {
   test("users array is expected length of 4", () => {
     return request(app)
       .get("/api/users")
+      .expect(200)
       .then((response) => {
         expect(response.body.users.length).toBe(4);
       });
@@ -276,6 +279,7 @@ describe("GET /api/users", () => {
   test("each user has required properties", () => {
     return request(app)
       .get("/api/users")
+      .expect(200)
       .then((response) => {
         response.body.users.forEach((user) => {
           expect(user).toHaveProperty("username");
@@ -289,6 +293,7 @@ describe("GET /api/users", () => {
   test("each user property is correct type", () => {
     return request(app)
       .get("/api/users")
+      .expect(200)
       .then((response) => {
         response.body.users.forEach((user) => {
           expect(typeof user.username).toBe("string");
