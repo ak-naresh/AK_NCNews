@@ -24,13 +24,13 @@ npm run setup-dbs
 
    - for `.env.test`- populate the file with the below for test-database
 
-   ```
+   ```sh
    PGDATABASE=nc_news_test
    ```
 
    - for `.env.development`- populate the file with the below for development-database
 
-   ```
+   ```sh
    PGDATABASE=nc_news
    ```
 
