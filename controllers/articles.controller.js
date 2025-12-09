@@ -50,7 +50,7 @@ function postCommentByArticleId(request, response, next) {
   articlesModel
     .insertCommentByArticleId(article_id, username, body)
     .then((comment) => {
-      response.status(200).send({ comment });
+      return response.status(201).send({ comment });
     })
     .catch(next);
 }

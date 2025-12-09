@@ -16,7 +16,7 @@ describe("Error Handling", () => {
   //1
   test("400 responds with Bad Request for invalid id", () => {
     return request(app)
-      .get("/api/articles/invalid-id")
+      .get("/api/articles/9u99")
       .expect(400)
       .then((response) => {
         expect(response.body.message).toBe("Bad Request");
@@ -26,7 +26,7 @@ describe("Error Handling", () => {
   //2
   test("404 responds with Path Not Found for unknown endpoint", () => {
     return request(app)
-      .get("/api/nonexistent-endpoint")
+      .get("/api/banana")
       .expect(404)
       .then((response) => {
         expect(response.body.message).toBe("Path Not Found");
@@ -334,12 +334,12 @@ POST /api/articles/:article_id/comments
 */
 describe("POST /api/articles/:article_id/comments", () => {
   //1
-  test("200 responds with posted comment when entering valid data", () => {
+  test("201 responds with posting created comment", () => {
     const newComment = { username: "butter_bridge", body: "Great article!" };
     return request(app)
       .post("/api/articles/1/comments")
       .send(newComment)
-      .expect(200)
+      .expect(201)
       .then((res) => {
         expect(res.body.comment).toMatchObject({
           article_id: 1,
