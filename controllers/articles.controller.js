@@ -1,9 +1,12 @@
 const articlesModel = require("../models/articles.model");
 
 function getArticles(request, response, next) {
-  return articlesModel.fetchArticles().then((articles) => {
-    response.status(200).send({ articles });
-  });
+  return articlesModel
+    .fetchArticles()
+    .then((articles) => {
+      response.status(200).send({ articles });
+    })
+    .catch(next);
 }
 
 function getArticleById(request, response, next) {
@@ -11,13 +14,16 @@ function getArticleById(request, response, next) {
   if (isNaN(Number(article_id))) {
     return next({ code: "22P02" });
   }
-  return articlesModel.lookupArticleId(article_id).then((articles) => {
-    if (articles.length === 0) {
-      return next({ status: 404, message: "Not Found" });
-    } else {
-      return response.status(200).send({ article: articles[0] });
-    }
-  });
+  return articlesModel
+    .lookupArticleId(article_id)
+    .then((articles) => {
+      if (articles.length === 0) {
+        return next({ status: 404, message: "Not Found" });
+      } else {
+        return response.status(200).send({ article: articles[0] });
+      }
+    })
+    .catch(next);
 }
 
 function getCommentsByArticleId(request, response, next) {
@@ -31,8 +37,8 @@ function getCommentsByArticleId(request, response, next) {
       if (comments.length === 0) {
         return next({ status: 404, message: "Not Found" });
       } else {
+        return response.status(200).send({ comments });
       }
-      return response.status(200).send({ comments });
     })
     .catch(next);
 }
