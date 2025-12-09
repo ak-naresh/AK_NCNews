@@ -391,6 +391,16 @@ describe("POST /api/articles/:article_id/comments", () => {
   });
 });
 
+/* 
+PATCH /api/articles/:article_id
+*/
+/*
+describe("PATCH /api/articles/:article_id", () => {
+  //1
+  test(".......");
+});
+*/
+
 /*
 GET /api/users
 */

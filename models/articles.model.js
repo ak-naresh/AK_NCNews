@@ -45,9 +45,9 @@ function fetchArticles() {
 - Function returns a promise that resolves to an array containing the matching article object (empty array if not found)
 */
 
-function lookupArticleId(id) {
+function lookupArticleId(article_id) {
   return db
-    .query(`SELECT * FROM articles WHERE article_id = $1`, [id])
+    .query(`SELECT * FROM articles WHERE article_id = $1`, [article_id])
     .then(({ rows }) => {
       return rows;
     });
@@ -60,11 +60,11 @@ function lookupArticleId(id) {
 - Function returns a promise that resolves to an array containing the matching article object (empty array if not found)
 */
 
-function fetchCommentsByID(id) {
+function fetchCommentsByID(article_id) {
   return db
     .query(
       `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC`,
-      [id]
+      [article_id]
     )
     .then(({ rows }) => {
       return rows;
@@ -84,7 +84,7 @@ function insertCommentByArticleId(article_id, username, body) {
       if (articleResult.rows.length === 0) {
         return Promise.reject({ status: 404, message: "Article not found" });
       }
-      return db //Adds comment
+      return db //Adds comment and returns is sent in response
         .query(
           `INSERT INTO comments (article_id, body, author) VALUES ($1, $2, $3) RETURNING *;`,
           [article_id, body, username]
