@@ -14,7 +14,7 @@ Error Handling
 */
 describe("Error Handling", () => {
   //1
-  test("400 responds with Bad Request for invalid id", () => {
+  test("400 response with Bad Request for invalid id", () => {
     return request(app)
       .get("/api/articles/9u99")
       .expect(400)
@@ -24,7 +24,7 @@ describe("Error Handling", () => {
   });
 
   //2
-  test("404 responds with Path Not Found for non-existent endpoint", () => {
+  test("404 response with Path Not Found for non-existent endpoint", () => {
     return request(app)
       .get("/api/banana")
       .expect(404)
@@ -34,7 +34,7 @@ describe("Error Handling", () => {
   });
 
   //3
-  test("404 responds with custom error for missing article", () => {
+  test("404 response with custom error for missing article", () => {
     return request(app)
       .get("/api/articles/9999")
       .expect(404)
@@ -97,7 +97,7 @@ GET /api/articles
 */
 describe("GET /api/articles", () => {
   //1
-  test("articles responds with 200", () => {
+  test("articles response with 200", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -230,7 +230,7 @@ describe("GET /api/articles/:article_id", () => {
 });
 
 //3
-test("404 responds with Not Found for non-existent article_id (ID not found))", () => {
+test("404 response with Not Found for non-existent article_id (ID not found))", () => {
   return request(app)
     .get("/api/articles/9999")
     .expect(404)
@@ -240,7 +240,7 @@ test("404 responds with Not Found for non-existent article_id (ID not found))", 
 });
 
 //4
-test("400 responds with Bad Request for invalid article_id (ID is NaN)", () => {
+test("400 response with Bad Request for invalid article_id (ID is NaN)", () => {
   return request(app)
     .get("/api/articles/9u99")
     .expect(400)
@@ -248,8 +248,9 @@ test("400 responds with Bad Request for invalid article_id (ID is NaN)", () => {
       expect(response.body.message).toBe("Bad Request");
     });
 });
+
 //5
-test("404 responds with Path Not Found for non-existent endpoint", () => {
+test("404 response with Path Not Found for non-existent endpoint", () => {
   return request(app)
     .get("/api/banana")
     .expect(404)
@@ -306,7 +307,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //5
+  //4
   test("comments is an array", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -316,7 +317,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //6
+  //5
   test("comments are sorted by date descending", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -328,8 +329,8 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //7
-  test("400 responds with bad request for invalid article_id (ID is NaN) ", () => {
+  //6
+  test("400 response with bad request for invalid article_id (ID is NaN) ", () => {
     return request(app)
       .get("/api/articles/9u99/comments")
       .expect(400)
@@ -338,8 +339,8 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //8
-  test("404 responds with not found for non-existent article_id (ID not found)", () => {
+  //7
+  test("404 response with not found for non-existent article_id (ID not found)", () => {
     return request(app)
       .get("/api/articles/9999/comments")
       .expect(404)
@@ -354,7 +355,7 @@ POST /api/articles/:article_id/comments
 */
 describe("POST /api/articles/:article_id/comments", () => {
   //1
-  test("201 responds with posting created comment", () => {
+  test("201 response for posting created comment", () => {
     return request(app)
       .post("/api/articles/1/comments")
       .send({ username: "butter_bridge", body: "Great article!" })
@@ -369,7 +370,7 @@ describe("POST /api/articles/:article_id/comments", () => {
   });
 
   //2
-  test("400 responds with error for missing body", () => {
+  test("400 response for username and/or body missing in request body", () => {
     return request(app)
       .post("/api/articles/1/comments")
       .send({ username: "butter_bridge" })
@@ -380,7 +381,7 @@ describe("POST /api/articles/:article_id/comments", () => {
   });
 
   //3
-  test("404 responds with error for non-existent article", () => {
+  test("404 response for non-existent article", () => {
     return request(app)
       .post("/api/articles/9999/comments")
       .send({ username: "butter_bridge", body: "Nice!" })
@@ -397,7 +398,78 @@ PATCH /api/articles/:article_id
 /*
 describe("PATCH /api/articles/:article_id", () => {
   //1
-  test(".......");
+  test("200 response for updated article when inc_values is an integer", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send({ inc_votes: 5 })
+      .expect(200)
+      .then((response) => {
+        expect(response.body.article).toHaveProperty("votes", 105);
+      });
+  });
+
+  //2
+  test("400 response when inc_votes is missing in request body", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send({})
+      .expect(400)
+      .then((response) => {
+        expect(response.body.message).toBe("Bad Request");
+      });
+  });
+
+  //3
+  test("400 response when inc_votes is NaN", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send({ inc_votes: "five" })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.message).toBe("Bad Request");
+      });
+  });
+
+  //4
+  test("404 response when article_ID is non-existent", () => {
+    return request(app)
+      .patch("/api/articles/9999")
+      .send({ inc_votes: 5 })
+      .expect(404)
+      .then((response) => {
+        expect(response.body.message).toBe("Article not found");
+      });
+  });
+
+  //5
+  test("updates article votes correctly following an incremention or decremention", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send({ inc_votes: -10 })
+      .expect(200)
+      .then((response) => {
+        expect(response.body.article).toHaveProperty("votes", 90);
+      });
+  });
+
+  //6
+  test("does not modify any other properties within article", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send({ inc_votes: 15 })
+      .expect(200)
+      .then((response) => {
+        expect(response.body.article).toMatchObject({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: new Date(1594329060000).toISOString(),
+          votes: expect.any(Number),
+        });
+      });
+  });
 });
 */
 
@@ -449,7 +521,7 @@ describe("GET /api/users", () => {
       });
   });
 
-  //6
+  //5
   test("each user property is correct type", () => {
     return request(app)
       .get("/api/users")
