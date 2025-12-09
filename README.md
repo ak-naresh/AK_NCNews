@@ -89,7 +89,7 @@ psql -d nc_news_test
   Model: Retrieves all articles with comment counts, excludes article body.
 - `lookupArticleId(id)`
   Model: Retrieves a single article by article_id
-- `fetchCommentsByDate(id)`
+- `fetchCommentsByID(id)`
   Model: Retrieves all comments for a given article, ordered by date descending.
 - `insertCommentByArticleId(article_id, username, body)`
   Model: Adds a new comment to the specified article after validating BOTH article and user exists.

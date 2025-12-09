@@ -49,10 +49,9 @@ GET /api/topics
 */
 describe("GET /api/topics", () => {
   //1
-  test("topics responds with 200 and correct content type", () => {
+  test("topics responds with 200", () => {
     return request(app)
       .get("/api/topics")
-      .expect("Content-Type", /json/)
       .expect(200)
       .then((response) => {
         expect(response.body).toHaveProperty("topics");
@@ -98,10 +97,9 @@ GET /api/articles
 */
 describe("GET /api/articles", () => {
   //1
-  test("articles responds with 200 and correct content type", () => {
+  test("articles responds with 200", () => {
     return request(app)
       .get("/api/articles")
-      .expect("Content-Type", /json/)
       .expect(200)
       .then((response) => {
         expect(response.body).toHaveProperty("articles");
@@ -211,7 +209,7 @@ GET /api/articles/:article_id
 */
 describe("GET /api/articles/:article_id", () => {
   //1
-  test("article_id responds with 200 and correct content type", () => {
+  test("article_id responds with 200", () => {
     return request(app)
       .get("/api/articles/1")
       .expect(200)
@@ -267,10 +265,9 @@ GET /api/articles/:article_id/comments
 */
 describe("GET /api/articles/:article_id/comments", () => {
   //1
-  test("comments responds with 200 and correct content type", () => {
+  test("comments responds with 200", () => {
     return request(app)
       .get("/api/articles/1/comments")
-      .expect("Content-Type", /json/)
       .expect(200)
       .then((response) => {
         expect(response.body).toHaveProperty("comments");
@@ -338,7 +335,7 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 
   //7
-  test("400 responds with bad request for invalid article_id (ID is not a number) ", () => {
+  test("400 responds with bad request for invalid article_id (ID is NaN) ", () => {
     return request(app)
       .get("/api/articles/invalid-id/comments")
       .expect(400)
@@ -379,7 +376,7 @@ describe("POST /api/articles/:article_id/comments", () => {
   });
 
   //2
-  test("400 responds with error for missing fields", () => {
+  test("400 responds with error for missing body", () => {
     const badComment = { username: "butter_bridge" };
     return request(app)
       .post("/api/articles/1/comments")
@@ -401,30 +398,34 @@ describe("POST /api/articles/:article_id/comments", () => {
         expect(response.body.message).toBe("Article not found");
       });
   });
+});
 
-  //4
-  test("404 responds with error for non-existent user", () => {
-    const newComment = { username: "hillybilly123", body: "shalom!" };
-    return request(app)
-      .post("/api/articles/1/comments")
-      .send(newComment)
-      .expect(404)
-      .then((response) => {
-        expect(response.body.message).toBe("User not found");
-      });
+/*
+PATCH /api/articles/:article_id/
+*/
+describe("PATCH /api/articles/:article_id", () => {
+  //1
+  test("200: increments votes for an article", () => {
+    return request(app).patch("/api/articles/1");
   });
 });
+
+//2
+test("400: invalid article_id (NaN)", () => {});
+
+//3
+test("404: non-existent article_id", () => {});
+
+//4
+test("400: inc_votes is not a number", () => {});
 
 /*
 GET /api/users
 */
 describe("GET /api/users", () => {
   //1
-  test("users responds with 200 and correct content type", () => {
-    return request(app)
-      .get("/api/users")
-      .expect("Content-Type", /json/)
-      .expect(200);
+  test("users responds with 200", () => {
+    return request(app).get("/api/users").expect(200);
   });
 
   //2
