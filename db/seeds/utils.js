@@ -20,7 +20,7 @@ Converted article_title to article_id before inserting comments, for mapping-  o
     const comment = comments[i];
 
     mappedComment.push({
-      article_id: titleToId[comment.article_title], // cause to lookup to default to undefined if no match found
+      article_id: titleToId[comment.article_title], //default to undefined if no match found
       body: comment.body,
       votes: comment.votes,
       author: comment.author,

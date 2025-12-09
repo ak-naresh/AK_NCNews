@@ -7,7 +7,7 @@ beforeEach(() => seed(data));
 afterAll(() => db.end());
 
 describe("mapArticleTitleToId", () => {
-  //1
+  // 1
   test("maps article_title to article_id correctly", () => {
     const comments = [
       {
@@ -29,7 +29,11 @@ describe("mapArticleTitleToId", () => {
       },
     ];
     const result = mapArticleTitleToId(comments, articles);
-    expect(result[0].article_id).toBe(2);
+    expect(result[0]).toHaveProperty("article_id", 2);
+    expect(result[0]).toHaveProperty("body", comments[0].body);
+    expect(result[0]).toHaveProperty("votes", comments[0].votes);
+    expect(result[0]).toHaveProperty("author", comments[0].author);
+    expect(result[0]).toHaveProperty("created_at", comments[0].created_at);
   });
 
   //2
@@ -55,6 +59,7 @@ describe("mapArticleTitleToId", () => {
     ];
     const result = mapArticleTitleToId(comments, articles);
     expect(result).not.toBe(comments);
+    expect(Array.isArray(result)).toBe(true);
     expect(comments).toEqual([
       {
         article_title: "Living in the shadow of a great man",
@@ -67,56 +72,10 @@ describe("mapArticleTitleToId", () => {
   });
 
   //3
-  test("mapped articleID properties", () => {
-    const comments = [
-      {
-        article_title: "Living in the shadow of a great man",
-        body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
-        votes: 14,
-        author: "butter_bridge",
-        created_at: new Date(1604113380000),
-      },
-    ];
+  test("sets article_id to undefined if article_title does not match", () => {
+    const comments = [{ article_title: "Nonexistent Article" }];
     const articles = [
-      {
-        article_id: 2,
-        title: "Living in the shadow of a great man",
-        body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
-        votes: 14,
-        author: "butter_bridge",
-        created_at: new Date(1604113380000),
-      },
-    ];
-    const result = mapArticleTitleToId(comments, articles);
-    expect(result[0]).toEqual({
-      body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
-      votes: 14,
-      author: "butter_bridge",
-      created_at: new Date(1604113380000),
-      article_id: 2,
-    });
-  });
-
-  //4
-  test("sets article_id to undefined if article_title does not match any article", () => {
-    const comments = [
-      {
-        article_title: "Nonexistent Article",
-        body: "Test body",
-        votes: 1,
-        author: "user",
-        created_at: new Date(1604113380000),
-      },
-    ];
-    const articles = [
-      {
-        article_id: 2,
-        title: "Living in the shadow of a great man",
-        body: "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.",
-        votes: 14,
-        author: "butter_bridge",
-        created_at: new Date(1604113380000),
-      },
+      { article_id: 2, title: "Living in the shadow of a great man" },
     ];
     const result = mapArticleTitleToId(comments, articles);
     expect(result[0].article_id).toBeUndefined();
