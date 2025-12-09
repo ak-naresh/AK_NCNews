@@ -233,6 +233,35 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
+//3
+test("404 responds with Not Found for non-existent article_id (article does not/ no longer exists)", () => {
+  return request(app)
+    .get("/api/articles/9999")
+    .expect(404)
+    .then((response) => {
+      expect(response.body.message).toBe("Not Found");
+    });
+});
+
+//4
+test("400 responds with Bad Request for invalid article_id (ID is NaN)", () => {
+  return request(app)
+    .get("/api/articles/9u99")
+    .expect(400)
+    .then((response) => {
+      expect(response.body.message).toBe("Bad Request");
+    });
+});
+//5
+test("404 responds with Path Not Found for endpoint does not exist", () => {
+  return request(app)
+    .get("/api/banana")
+    .expect(404)
+    .then((response) => {
+      expect(response.body.message).toBe("Path Not Found");
+    });
+});
+
 /*
 GET /api/articles/:article_id/comments
 */

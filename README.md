@@ -1,4 +1,4 @@
-## NC News Backend
+# NC News Backend
 
 This project is a RESTful API for NC News platform, built with Node.js and Express. Providings endpoints for articles, topics, users, and comments, using PSQL for data storage, and the API supporting CRUD operations.
 
@@ -62,7 +62,7 @@ psql -d nc_news_test
 
 ## List of all functions
 
-# articles.controller.js
+### articles.controller.js
 
 - `getArticles(request, response, next)`
   Controller: Handles GET /api/articles, fetches all articles and sends as response.
@@ -73,17 +73,17 @@ psql -d nc_news_test
 - `postCommentByArticleId(request, response, next)`
   Controller: Handles POST /api/articles/:article_id/comments, adds a new comment to the specified article.
 
-# topics.controller.js
+### topics.controller.js
 
 - `getTopics(request, response, next)`
   Controller: Handles GET /api/topics, fetches all topics and sends as response.
 
-# users.controller.js
+### users.controller.js
 
 - `getUsers(request, response, next)`
   Controller: Handles GET /api/users, fetches all users and sends as response.
 
-# articles.model.js
+### articles.model.js
 
 - `fetchArticles()`
   Model: Retrieves all articles with comment counts, excludes article body.
@@ -94,22 +94,22 @@ psql -d nc_news_test
 - `insertCommentByArticleId(article_id, username, body)`
   Model: Adds a new comment to the specified article after validating BOTH article and user exists.
 
-# topics.model.js
+### topics.model.js
 
 - `fetchTopics()`
   Model: Retrieves all topics from the database.
 
-# users.model.js
+### users.model.js
 
 - `selectUsers()`
   Model: Retrieves all users from the database.
 
-# seed.js
+### seed.js
 
 - `seed({ topicData, userData, articleData, commentData })`
   DB Seeding: drop tables, creates tables, and inserts all provided data into tables
 
-# utils.js
+### utils.js
 
 - `mapArticleTitleToId(comments, articles)`
   Utility: Maps comment.article_title to correct article_id for seeding comments
@@ -118,19 +118,19 @@ psql -d nc_news_test
 
 ## Error Handling
 
-# Unknown endpoints
+### Unknown endpoints
 
 - Unknown endpoints are handled by `handlePathNotFound`, returning status 404 with message.
 
-# Custom errors
+### Custom errors
 
 - Custom errors are handled by `handleCustomErrors`.
 
-# PSQL errors
+### PSQL errors
 
 - `22P02` are handled by `handleBadRequest`, returning status 400 with message.
 
-# Server errors
+### Server errors
 
 - Unexpected errors are logged, returning status 500 with message via `handleServerErrors`.
 
