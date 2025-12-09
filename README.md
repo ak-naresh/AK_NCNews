@@ -1,4 +1,4 @@
-### NC News Backend
+## NC News Backend
 
 This project is a RESTful API for NC News platform, built with Node.js and Express. Providings endpoints for articles, topics, users, and comments, using PSQL for data storage, and the API supporting CRUD operations.
 
