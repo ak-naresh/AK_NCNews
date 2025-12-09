@@ -42,9 +42,7 @@ function postCommentByArticleId(request, response, next) {
   const { username, body } = request.body;
 
   if (!username || !body) {
-    return response
-      .status(400)
-      .send({ message: "Missing field in request body" });
+    return response.status(400).send({ message: "Missing field in body" });
   }
 
   articlesModel

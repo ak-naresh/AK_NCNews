@@ -112,3 +112,6 @@ notes concering incorre error-handling:
 2. app.use(handleBadRequest); //Handles PSQL bad request errors (400)
 3. app.use(handleCustomErrors); //Handles custom errors
 4. app.use(handleServerErrors); //Handles all other server errors (500)
+
+//article_id 3 is first because created_at changes order
+//not one of the two but both articles and comments have a created_property

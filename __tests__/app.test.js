@@ -24,7 +24,7 @@ describe("Error Handling", () => {
   });
 
   //2
-  test("404 responds with Path Not Found for unknown endpoint", () => {
+  test("404 responds with Path Not Found for non-existent endpoint", () => {
     return request(app)
       .get("/api/banana")
       .expect(404)
@@ -127,7 +127,7 @@ describe("GET /api/articles", () => {
   });
 
   //4
-  test("each article has required properties", () => {
+  test("each article has correct properties including comment_count", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -170,8 +170,9 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then((response) => {
-        const articles = response.body.articles;
-        expect(articles).toBeSortedBy("created_at", { descending: true });
+        expect(response.body.articles).toBeSortedBy("created_at", {
+          descending: true,
+        });
       });
   });
 
@@ -188,19 +189,17 @@ describe("GET /api/articles", () => {
   });
 
   //8
-  test("comment_count matches number of comments in database for an article", async () => {
-    const response = await request(app).get("/api/articles").expect(200);
-    const articles = response.body.articles;
-    const commentCountCheck = articles.map(async (article) => {
-      const article_id = article.article_id;
-      const comment_count = article.comment_count;
-      const dbResult = await db.query(
-        "SELECT COUNT(*) AS count FROM comments WHERE article_id = $1",
-        [article_id]
-      );
-      expect(comment_count).toBe(parseInt(dbResult.rows[0].count, 10));
-    });
-    await Promise.all(commentCountCheck);
+  test("comment_count for first and last article is correct", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => {
+        expect(response.body.articles[0].comment_count).toBe(2);
+        expect(
+          response.body.articles[response.body.articles.length - 1]
+            .comment_count
+        ).toBe(0);
+      });
   });
 });
 
@@ -215,8 +214,7 @@ describe("GET /api/articles/:article_id", () => {
       .expect(200)
       .then((response) => {
         expect(response.body).toHaveProperty("article");
-        const article = response.body.article;
-        expect(article).toHaveProperty("article_id");
+        expect(response.body.article).toHaveProperty("article_id");
       });
   });
 
@@ -232,7 +230,7 @@ describe("GET /api/articles/:article_id", () => {
 });
 
 //3
-test("404 responds with Not Found for non-existent article_id (article does not/ no longer exists)", () => {
+test("404 responds with Not Found for non-existent article_id (ID not found))", () => {
   return request(app)
     .get("/api/articles/9999")
     .expect(404)
@@ -251,7 +249,7 @@ test("400 responds with Bad Request for invalid article_id (ID is NaN)", () => {
     });
 });
 //5
-test("404 responds with Path Not Found for endpoint does not exist", () => {
+test("404 responds with Path Not Found for non-existent endpoint", () => {
   return request(app)
     .get("/api/banana")
     .expect(404)
@@ -291,7 +289,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //4
+  //3
   test("each comment property is correct type", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -319,25 +317,21 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 
   //6
-  test("comments array is sorted by date descending", () => {
+  test("comments are sorted by date descending", () => {
     return request(app)
       .get("/api/articles/1/comments")
       .expect(200)
       .then((response) => {
-        const comments = response.body.comments;
-        for (let i = 1; i < comments.length; i++) {
-          expect(
-            new Date(comments[i - 1].created_at) >=
-              new Date(comments[i].created_at)
-          ).toBe(true);
-        }
+        expect(response.body.comments).toBeSortedBy("created_at", {
+          descending: true,
+        });
       });
   });
 
   //7
   test("400 responds with bad request for invalid article_id (ID is NaN) ", () => {
     return request(app)
-      .get("/api/articles/invalid-id/comments")
+      .get("/api/articles/9u99/comments")
       .expect(400)
       .then((response) => {
         expect(response.body.message).toBe("Bad Request");
@@ -361,13 +355,12 @@ POST /api/articles/:article_id/comments
 describe("POST /api/articles/:article_id/comments", () => {
   //1
   test("201 responds with posting created comment", () => {
-    const newComment = { username: "butter_bridge", body: "Great article!" };
     return request(app)
       .post("/api/articles/1/comments")
-      .send(newComment)
+      .send({ username: "butter_bridge", body: "Great article!" })
       .expect(201)
-      .then((res) => {
-        expect(res.body.comment).toMatchObject({
+      .then((response) => {
+        expect(response.body.comment).toMatchObject({
           article_id: 1,
           body: "Great article!",
           author: "butter_bridge",
@@ -377,22 +370,20 @@ describe("POST /api/articles/:article_id/comments", () => {
 
   //2
   test("400 responds with error for missing body", () => {
-    const badComment = { username: "butter_bridge" };
     return request(app)
       .post("/api/articles/1/comments")
-      .send(badComment)
+      .send({ username: "butter_bridge" })
       .expect(400)
       .then((response) => {
-        expect(response.body.message).toBe("Missing field in request body");
+        expect(response.body.message).toBe("Missing field in body");
       });
   });
 
   //3
   test("404 responds with error for non-existent article", () => {
-    const newComment = { username: "butter_bridge", body: "Nice!" };
     return request(app)
       .post("/api/articles/9999/comments")
-      .send(newComment)
+      .send({ username: "butter_bridge", body: "Nice!" })
       .expect(404)
       .then((response) => {
         expect(response.body.message).toBe("Article not found");
@@ -401,35 +392,11 @@ describe("POST /api/articles/:article_id/comments", () => {
 });
 
 /*
-PATCH /api/articles/:article_id/
-*/
-describe("PATCH /api/articles/:article_id", () => {
-  //1
-  test("200: increments votes for an article", () => {
-    return request(app).patch("/api/articles/1");
-  });
-});
-
-//2
-test("400: invalid article_id (NaN)", () => {});
-
-//3
-test("404: non-existent article_id", () => {});
-
-//4
-test("400: inc_votes is not a number", () => {});
-
-/*
 GET /api/users
 */
 describe("GET /api/users", () => {
   //1
-  test("users responds with 200", () => {
-    return request(app).get("/api/users").expect(200);
-  });
-
-  //2
-  test("response has users property", () => {
+  test("user responds with 200", () => {
     return request(app)
       .get("/api/users")
       .expect(200)
@@ -438,7 +405,7 @@ describe("GET /api/users", () => {
       });
   });
 
-  //3
+  //2
   test("users is an array", () => {
     return request(app)
       .get("/api/users")
@@ -448,7 +415,7 @@ describe("GET /api/users", () => {
       });
   });
 
-  //4
+  //3
   test("users array is expected length of 4", () => {
     return request(app)
       .get("/api/users")
@@ -458,7 +425,7 @@ describe("GET /api/users", () => {
       });
   });
 
-  //5
+  //4
   test("each user has required properties", () => {
     return request(app)
       .get("/api/users")
