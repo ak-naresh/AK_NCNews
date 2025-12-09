@@ -28,7 +28,7 @@ function getCommentsByArticleId(request, response, next) {
   articlesModel
     .fetchCommentsByDate(article_id)
     .then((comments) => {
-      if (!comments || comments.length === 0) {
+      if (comments.length === 0) {
         return next({ status: 404, message: "Not Found" });
       } else {
       }
