@@ -2,7 +2,10 @@
 function handleCustomErrors(error, request, response, next) {
   if (error.status && error.message) {
     response.status(error.status).send({ message: error.message });
-  } else next(error);
+  } else {
+    console.log(error);
+    response.status(500).send({ message: "Internal Server Error" });
+  }
 }
 
 //Handles 400 Bad Request

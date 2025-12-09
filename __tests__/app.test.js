@@ -19,7 +19,7 @@ describe("Error Handling", () => {
       .get("/api/articles/invalid-id")
       .expect(400)
       .then((response) => {
-  expect(response.body.message).toBe("Bad Request");
+        expect(response.body.message).toBe("Bad Request");
       });
   });
 
@@ -29,7 +29,7 @@ describe("Error Handling", () => {
       .get("/api/nonexistent-endpoint")
       .expect(404)
       .then((response) => {
-  expect(response.body.message).toBe("Path Not Found");
+        expect(response.body.message).toBe("Path Not Found");
       });
   });
 
@@ -39,7 +39,7 @@ describe("Error Handling", () => {
       .get("/api/articles/9999")
       .expect(404)
       .then((response) => {
-  expect(response.body.message).toBe("Not Found");
+        expect(response.body.message).toBe("Not Found");
       });
   });
 });
@@ -314,7 +314,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       .get("/api/articles/invalid-id/comments")
       .expect(400)
       .then((response) => {
-  expect(response.body.message).toBe("Bad Request");
+        expect(response.body.message).toBe("Bad Request");
       });
   });
 
@@ -324,7 +324,64 @@ describe("GET /api/articles/:article_id/comments", () => {
       .get("/api/articles/9999/comments")
       .expect(404)
       .then((response) => {
-  expect(response.body.message).toBe("Not Found");
+        expect(response.body.message).toBe("Not Found");
+      });
+  });
+});
+
+/*
+POST /api/articles/:article_id/comments
+*/
+describe("POST /api/articles/:article_id/comments", () => {
+  //1
+  test("200 responds with posted comment when entering valid data", () => {
+    const newComment = { username: "butter_bridge", body: "Great article!" };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(newComment)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.comment).toMatchObject({
+          article_id: 1,
+          body: "Great article!",
+          author: "butter_bridge",
+        });
+      });
+  });
+
+  //2
+  test("400 responds with error for missing fields", () => {
+    const badComment = { username: "butter_bridge" };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(badComment)
+      .expect(400)
+      .then((response) => {
+        expect(response.body.message).toBe("Missing field in request body");
+      });
+  });
+
+  //3
+  test("404 responds with error for non-existent article", () => {
+    const newComment = { username: "butter_bridge", body: "Nice!" };
+    return request(app)
+      .post("/api/articles/9999/comments")
+      .send(newComment)
+      .expect(404)
+      .then((response) => {
+        expect(response.body.message).toBe("Article not found");
+      });
+  });
+
+  //4
+  test("404 responds with error for non-existent user", () => {
+    const newComment = { username: "hillybilly123", body: "shalom!" };
+    return request(app)
+      .post("/api/articles/1/comments")
+      .send(newComment)
+      .expect(404)
+      .then((response) => {
+        expect(response.body.message).toBe("User not found");
       });
   });
 });

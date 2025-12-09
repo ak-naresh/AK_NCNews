@@ -90,3 +90,19 @@ Requirements:
 ---
 
 - removed all instances of '.catch((error) => { next(error); }' as Express 5 handles this automatically
+
+---
+
+note-to-self:
+Mixed ordering of error-handling middleware in Express causes errors
+
+- More specific error handlers like for PSQL errors must come before general ones like custom or server error handlers.
+- If a general 500 handler comes before a 400 invalid input, the specific error will never be caught and will return wrong status code.
+- Always order: specific → general.
+
+app.use(handlePathNotFound); //Handles unknown endpoints (404)
+app.use(handleBadRequest); //Handles PSQL bad request errors (400)
+app.use(handleCustomErrors); //Handles custom errors
+app.use(handleServerErrors); //Handles all other server errors (500)
+
+---

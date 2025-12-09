@@ -71,8 +71,39 @@ function fetchCommentsByDate(id) {
     });
 }
 
+/*
+- insertCommentByArticleId adds a new comment to the specific article_id.
+- First checks if the ID exists, if not it rejects the promise with a 404.
+- Next, it checks if the username exists, if not it rejects with a 404.
+- If both article and username exist, it inserts the new comment into the comments table using parametric query to avoid SQL injection.
+- Returns promise that resolves to newly inserted comment.
+*/
+function insertCommentByArticleId(article_id, username, body) {
+  return db //cjecks if article exists
+    .query("SELECT * FROM articles WHERE article_id = $1;", [article_id])
+    .then((articleResult) => {
+      if (articleResult.rows.length === 0) {
+        return Promise.reject({ status: 404, message: "Article not found" });
+      }
+      return db //checks if username exists
+        .query("SELECT * FROM users WHERE username = $1;", [username])
+        .then((userResult) => {
+          if (userResult.rows.length === 0) {
+            return Promise.reject({ status: 404, message: "User not found" });
+          }
+          return db //Adds comment
+            .query(
+              `INSERT INTO comments (article_id, body, author) VALUES ($1, $2, $3) RETURNING *;`,
+              [article_id, body, username]
+            )
+            .then((commentResult) => commentResult.rows[0]);
+        });
+    });
+}
+
 module.exports = {
   fetchArticles,
   lookupArticleId,
   fetchCommentsByDate,
+  insertCommentByArticleId,
 };
