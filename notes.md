@@ -71,12 +71,12 @@
 
 ## Error Handling
 
-### List of error status codes
-
-//When not: 200 OK / 201 Created
+### List of status codes
 
 - `200 OK`
   Status: Successful GET request, returns data
+- `201 Created`
+  Status: Successful new comment created
 - `400 Bad Request`
   Status: Invalid input, e.g. wrong data type
 - `404 Not Found`

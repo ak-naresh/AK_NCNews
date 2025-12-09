@@ -120,7 +120,7 @@ psql -d nc_news_test
 
 ### Unknown endpoints
 
-- Unknown endpoints are handled by `handlePathNotFound`, returning status 404 with message.
+- Unknown endpoints are handled by `handlePathNotFound`, returning 404 Not Found .
 
 ### Custom errors
 
@@ -128,10 +128,10 @@ psql -d nc_news_test
 
 ### PSQL errors
 
-- `22P02` are handled by `handleBadRequest`, returning status 400 with message.
+- `22P02` are handled by `handleBadRequest`, returning 400 Bad Request.
 
 ### Server errors
 
-- Unexpected errors are logged, returning status 500 with message via `handleServerErrors`.
+- Unexpected errors are logged, returning 500 Internal Server Error via `handleServerErrors`.
 
 ---
