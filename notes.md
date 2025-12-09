@@ -1,17 +1,19 @@
-----
-Requirements:
+## Requirements:
 
 # Topics- Each topic in the topics table should have:
+
 - `slug` field which is a unique string that acts as the table`s primary key (a slug is a term used in publishing to identify an article)
 - `description` field which is a string giving a brief description of a given topic
 - `img_url` field which contains a string containing a link to an image representing the topic
 
 # Users- Each user should have:
+
 - `username` which is the primary key & unique
 - `name`
 - `avatar_url`
 
 # Articles- Each article should have:
+
 - `article_id` which is the primary key
 - `title`
 - `topic` field which references the `slug` in the topics table
@@ -22,6 +24,7 @@ Requirements:
 - `article_img_url`
 
 # Comments- Each comment should have:
+
 - `comment_id` which is the primary key
 - `article_id` field that references an article`s primary key
 - `body`
@@ -31,7 +34,7 @@ Requirements:
 
 ---
 
-# Order to create tables based on primary keys (PK) and foreign keys (FK):
+## Order to create tables based on primary keys (PK) and foreign keys (FK):
 
 - 1 topics //topics contains no foreign keys = NO DEPENDENCIES
 - 2 users //`name` & `username` from Users used within `author` in Articles & Comments = NO DEPENDENCIES
@@ -40,19 +43,19 @@ Requirements:
 
 ---
 
-# When creating tables: npm run test-seed
+## When creating tables: npm run test-seed
 
 - You should run `npm run test-seed` in terminal regularly to check your progress. Each passing test confirms that a part of your seed function is working as expected. If a test fails, use the error messages to debug your table structure or data insertion.
 
 ---
 
-# When dropping tables:
+## When dropping tables:
 
 - When dropping tables in seed file, ensure to drop them in reverse order to avoid FK errors. (urghhh)
 
 ---
 
-# When seeding data (after creating tables):
+## When seeding data (after creating tables):
 
 - When seeding data, ensure to seed tables in the correct order to avoid FK errors.
 - Seeding maps each topic object to an array of values- then uses `pg-format` to generate bulk SQL insert statement, then executes the query to insert all topics at once.
@@ -62,9 +65,13 @@ Requirements:
 
 ---
 
-## Pool is used to keep connection open instead of reconnecting each time.
+- Pool is used to keep connection open instead of reconnecting each time.
+
+---
 
 ## List of error status codes
+
+//When not: 200 OK / 201 Created
 
 - `200 OK`
   Status: Successful GET request, returns data
@@ -75,7 +82,7 @@ Requirements:
 - `500 Internal Server Error`
   Status: Unexpected server error
 
--
+## Error-handling process
 
 1. Request comes in and controller checks request
 2. If something is wrong (like an invalid id), it creates an error object:
@@ -89,7 +96,7 @@ Requirements:
 
 ---
 
-- removed all instances of '.catch((error) => { next(error); }' as Express 5 handles this automatically
+- removed all instances of '.catch(error) => { next(error); }' as Express 5 handles this automatically
 
 ---
 

@@ -1,3 +1,5 @@
+//When not: 200 OK / 201 Created
+
 //Handles custom errors
 function handleCustomErrors(error, request, response, next) {
   if (error.status && error.message) {
