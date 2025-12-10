@@ -47,6 +47,10 @@ function postCommentByArticleId(request, response, next) {
   const { article_id } = request.params;
   const { username, body } = request.body;
 
+  if (isNaN(Number(article_id))) {
+    return next({ code: "22P02" });
+  }
+
   if (!username || !body) {
     return response.status(400).send({ message: "Missing field in body" });
   }
@@ -59,9 +63,32 @@ function postCommentByArticleId(request, response, next) {
     .catch(next);
 }
 
+function patchArticleById(request, response, next) {
+  const { article_id } = request.params;
+  const { inc_votes } = request.body;
+
+  if (isNaN(Number(article_id))) {
+    return next({ code: "22P02" });
+  }
+  if (isNaN(Number(inc_votes))) {
+    return response.status(400).send({ message: "Bad Request" });
+  }
+  articlesModel
+    .updateArticleVotes(article_id, inc_votes)
+    .then((article) => {
+      if (!article) {
+        return response.status(404).send({ message: "Article not found" });
+      } else {
+        return response.status(200).send({ article });
+      }
+    })
+    .catch(next);
+}
+
 module.exports = {
   getArticles,
   getArticleById,
   getCommentsByArticleId,
   postCommentByArticleId,
+  patchArticleById,
 };

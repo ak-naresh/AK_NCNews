@@ -72,6 +72,8 @@ psql -d nc_news_test
   Controller: Handles GET /api/articles/:article_id/comments, fetches all comments for a given article, ordered by most recent first.
 - `postCommentByArticleId(request, response, next)`
   Controller: Handles POST /api/articles/:article_id/comments, adds a new comment to the specified article.
+- `patchArticleById(request, response, next)`
+  Controller: Handles PATCH /api/articles/:article_id, updates the votes property of an article_ID.
 
 ### topics.controller.js
 
@@ -93,6 +95,8 @@ psql -d nc_news_test
   Model: Retrieves all comments for a given article, ordered by date descending.
 - `insertCommentByArticleId(article_id, username, body)`
   Model: Adds a new comment to the specified article after validating BOTH article and user exists.
+- `updateArticleVotes(article_id, inc_votes)`
+  Model: Updates votes property of article by article_id, incrementing or decrementing by inc_votes integer.
 
 ### topics.model.js
 

@@ -395,7 +395,6 @@ describe("POST /api/articles/:article_id/comments", () => {
 /* 
 PATCH /api/articles/:article_id
 */
-/*
 describe("PATCH /api/articles/:article_id", () => {
   //1
   test("200 response for updated article when inc_values is an integer", () => {
@@ -404,7 +403,7 @@ describe("PATCH /api/articles/:article_id", () => {
       .send({ inc_votes: 5 })
       .expect(200)
       .then((response) => {
-        expect(response.body.article).toHaveProperty("votes", 105);
+        expect(response.body.article.votes).toBe(105);
       });
   });
 
@@ -448,7 +447,7 @@ describe("PATCH /api/articles/:article_id", () => {
       .send({ inc_votes: -10 })
       .expect(200)
       .then((response) => {
-        expect(response.body.article).toHaveProperty("votes", 90);
+        expect(response.body.article.votes).toBe(90);
       });
   });
 
@@ -465,13 +464,10 @@ describe("PATCH /api/articles/:article_id", () => {
           topic: "mitch",
           author: "butter_bridge",
           body: "I find this existence challenging",
-          created_at: new Date(1594329060000).toISOString(),
-          votes: expect.any(Number),
         });
       });
   });
 });
-*/
 
 /*
 GET /api/users

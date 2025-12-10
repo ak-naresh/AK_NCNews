@@ -73,6 +73,8 @@
 
 ### List of status codes
 
+- `22P02`
+  Status: PSQL error for invalid syntax, handled as 400 Bad Request
 - `200 OK`
   Status: Successful GET request, returns data
 - `201 Created`
