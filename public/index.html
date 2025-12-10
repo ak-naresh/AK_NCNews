@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="styles.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
@@ -8,48 +9,283 @@
   <body>
     <header>
       <h1>NC News API Documentation</h1>
+
       <nav>
+        <h3>Topics</h3>
         <ul>
-          <li>Topics</li>
-          <li>Articles</li>
-          <li>Article by ID</li>
-          <li>Comments by Article</li>
-          <li>Post Comment</li>
-          <li>Patch Article</li>
-          <li>Users</li>
+          <li><a href="#topics">Topics</a></li>
+        </ul>
+
+        <h3>Articles</h3>
+        <ul>
+          <li><a href="#articles">Articles</a></li>
+          <li><a href="#article-by-id">Article by ID</a></li>
+          <li><a href="#comments-by-article">Comments by Article</a></li>
+          <li><a href="#post-comment">Post Comment</a></li>
+          <li><a href="#patch-article">Patch Article</a></li>
+        </ul>
+
+        <h3>Users</h3>
+        <ul>
+          <li><a href="#users">Users</a></li>
         </ul>
       </nav>
     </header>
     <main>
       <section id="topics">
-        <h2>GET /api/topics</h2>
-        <p>Responds with a list of topics.</p>
+        <h2>
+          <p>___________________</p>
+          GET /api/topics
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Responds with a list of all available topics on NC News. Each topic
+          includes a slug, description, and image URL.
+        </p>
+        <h4>Example Response:</h4>
+        <pre>
+{ topics: [
+  { description: "Code is love, code is life",
+    slug: "coding",
+    img_url: "",
+  },
+  { description: "FOOTIE!",
+    slug: "football",
+    img_url: "https://images.pexels.com/photos/209841/pexels-photo-209841.jpeg?w=700&h=700",
+  }
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>400 Bad Request – Invalid quert</li>
+          <li>404 Not Found – Resource not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
+
       <section id="articles">
-        <h2>GET /api/articles</h2>
-        <p>Responds with a list of articles.</p>
+        <h2>
+          <p>___________________</p>
+          GET /api/articles
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Responds with a list of articles published on NC News. Each article
+          includes a title, topic, author, body, creation date, vote count, and
+          image URL. Supports parametric queries for sorting and filtering by
+          topic to find relevant articles, avoiding SQL injections.
+        </p>
+        <h4>Example Response:</h4>
+        <pre>
+{ articles: [  
+   {title: "Running a Node App",
+    topic: "coding",
+    author: "jessjelly",
+    body: "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with...",
+      created_at: new Date(1604728980000),
+    votes: 0,
+    article_img_url: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?w=700&h=700",
+  },
+  {title: "The Rise Of Thinking Machines: How IBM's Watson Takes On The World",
+    topic: "coding",
+    author: "jessjelly",
+    body: "Many people know Watson as the IBM-developed cognitive super computer that won the Jeopardy! gameshow in 2011. In truth, Watson is not actually a computer...",
+      created_at: new Date(1589418120000),
+    votes: 0,
+    article_img_url: "https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?w=700&h=700",
+  }
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>400 Bad Request – Invalid query</li>
+          <li>404 Not Found – Resource not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
+
       <section id="article-by-id">
-        <h2>GET /api/articles/:article_id</h2>
-        <p>Responds with an article by article ID.</p>
+        <h2>
+          <p>___________________</p>
+          GET /api/articles/:article_id
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Responds with an article by article ID Response includes article's:
+          title, body, topic, author, creation date, vote count, and image URL.
+        </p>
+        <h4>Example Response:</h4>
+        <pre>
+{ article: [
+    article_id: 1,
+    title: "Running a Node App",
+    body: "This is the content...",
+    topic: "coding",
+    author: "jessjelly",
+    created_at: new Date(1604728980000),
+    votes: 0,
+    article_img_url: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?w=700&h=700"
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>
+            400 Bad Request – Invalid article ID (e.g., wrong data type, 22P02
+            PSQL error for invalid syntax)
+          </li>
+          <li>404 Not Found – Article not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
+
       <section id="comments-by-article">
-        <h2>GET /api/articles/:article_id/comments</h2>
-        <p>Responds with a list of comments by article ID.</p>
+        <h2>
+          <p>___________________</p>
+          GET /api/articles/:article_id/comments
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Responds with a list of comments by article ID. Each comment includes:
+          comment ID, body, author, vote count, and creation date.
+        </p>
+        <h4>Example Response:</h4>
+        <pre>
+{ comments: [
+  { comment_id: 1,
+    body: "Great article!",
+    article_id: 1,
+    author: "tickle122",
+    votes: 16,
+    created_at: new Date(1604728980000)
+  },
+  { comment_id: 2,
+    body: "Very informative.",
+    article_id: 1,
+    author: "grumpy19",
+    votes: 3,
+    created_at: new Date(1604729000000)
+  }
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>
+            400 Bad Request – Invalid article ID (e.g., wrong data type, 22P02
+            PSQL error for invalid syntax)
+          </li>
+          <li>404 Not Found – Article not found or no comments for article</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
+
       <section id="post-comment">
-        <h2>POST /api/articles/:article_id/comments</h2>
-        <p>Add a comment to an article by article ID.</p>
+        <h2>
+          <p>___________________</p>
+          POST /api/articles/:article_id/comments
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Add a comment to an article by article ID. Requires both the username
+          of the commenter and the comment body. The response returns the
+          created comment with its ID, author, vote count, and date.
+        </p>
+        <h4>Example Response:</h4>
+        <pre>
+{ comment: [
+    comment_id: 3,
+    body: "Thanks for the article!",
+    article_id: 1,
+    author: "happyreader",
+    votes: 0,
+    created_at: new Date(1604729100000)
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>
+            400 Bad Request – Invalid article ID (e.g., wrong data type, 22P02
+            PSQL error for invalid syntax)
+          </li>
+          <li>
+            400 Bad Request – Missing field (username and/or body missing)
+          </li>
+          <li>404 Not Found – Article not found</li>
+          <li>404 Not Found – Username not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
+
       <section id="patch-article">
-        <h2>PATCH /api/articles/:article_id</h2>
-        <p>Updates an article by article ID.</p>
+        <h2>
+          <p>___________________</p>
+          PATCH /api/articles/:article_id
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Updates vote count for an article ID. Requires a request body with an
+          inc_votes integer to increment or decrement current vote total.
+          Response returns updated article with new vote count.
+        </p>
+        <h4>Example Response:</h4>
+        <pre>
+{ article: [
+    article_id: 1,
+    votes: 1
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>
+            400 Bad Request – Invalid article ID (e.g., wrong data type, 22P02
+            PSQL error for invalid syntax)
+          </li>
+          <li>400 Bad Request – Missing field in body (inc_votes missing)</li>
+          <li>404 Not Found – Article not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
+
       <section id="users">
-        <h2>GET /api/users</h2>
+        <h2>
+          <p>___________________</p>
+          GET /api/users
+        </h2>
+        <h4>Description:</h4>
         <p>Responds with a list of users.</p>
+        <h4>Example Response:</h4>
+        <pre>
+{ users: [
+  { username: "tickle122",
+    name: "Tom Tickle",
+    avatar_url:
+      "https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953",
+  },
+  { username: "grumpy19",
+    name: "Paul Grump",
+    avatar_url:
+      "https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013",
+  }
+]}
+</pre
+        >
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>400 Bad Request – Invalid query</li>
+          <li>404 Not Found – Resource not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
       </section>
     </main>
-    <footer></footer>
+
+    <footer>
+      <p>---------------------</p>
+      << Stay tuned in... or wait until someone else tells you what happened. >>
+    </footer>
   </body>
 </html>
