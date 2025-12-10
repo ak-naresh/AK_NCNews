@@ -23,6 +23,7 @@ const app = express();
 Middleware:
 */
 app.use(express.json()); //parses JSON requests to populate request.body
+app.use("/api", express.static("public")); //Serves static files from 'public' directory for /api
 
 /*
 ---
