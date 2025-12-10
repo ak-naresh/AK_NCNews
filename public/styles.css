@@ -13,3 +13,13 @@ footer {
 h4 {
   color: lightpink;
 }
+
+.header-nav-border-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+  width: 150px;
+  padding: 5px;
+  border: 1.5px solid orchid;
+}
