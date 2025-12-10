@@ -34,6 +34,19 @@
 
 ---
 
+mvc
+
+Model:
+The Model respresents the data and business logic of an application, handling the fetching, updating, creation and deletion of data. It is responsible for sending the relevant data in the required format to the Controller.
+
+View:
+The view is the interface that displays data from the Model to the user and sends user inputs to the Controller. Views will not be covered as part of the Back End block.
+
+Controller:
+The Controller handles the client request. Using the information contained on the request (path, params, queries and body), it will invoke the model that will interact with the dataset. The controller is also responsible for sending a response back to the client.
+
+---
+
 ### Order to create tables based on primary keys (PK) and foreign keys (FK):
 
 - 1 topics //topics contains no foreign keys = NO DEPENDENCIES
@@ -121,3 +134,10 @@ notes concering incorre error-handling:
 //not one of the two but both articles and comments have a created_property
 
 ---
+
+GET/POST/PATCH/DELETE = CRUD
+
+GET = Read (retrieves data, e.g. list articles, get user)
+POST = Create (adds new data, e.g. new article or comment)
+PATCH/PUT = Update (modifies existing data, e.g. update votes)
+DELETE = Delete (removes data, e.g. delete a comment or article)
