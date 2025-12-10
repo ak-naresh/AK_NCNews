@@ -82,7 +82,7 @@
    {title: "Running a Node App",
     topic: "coding",
     author: "jessjelly",
-    body: "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with...",
+    body: "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into...",
       created_at: new Date(1604728980000),
     votes: 0,
     article_img_url: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?w=700&h=700",
@@ -90,7 +90,7 @@
   {title: "The Rise Of Thinking Machines: How IBM's Watson Takes On The World",
     topic: "coding",
     author: "jessjelly",
-    body: "Many people know Watson as the IBM-developed cognitive super computer that won the Jeopardy! gameshow in 2011. In truth, Watson is not actually a computer...",
+    body: "Many people know Watson as the IBM-developed cognitive super computer that won the Jeopardy! gameshow in 2011. In truth, Watson is...",
       created_at: new Date(1589418120000),
     votes: 0,
     article_img_url: "https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?w=700&h=700",
@@ -193,6 +193,14 @@
           of the commenter and the comment body. The response returns the
           created comment with its ID, author, vote count, and date.
         </p>
+        <h4>Expected format for Requested Body:</h4>
+        <pre>
+  { 
+  username:  string,
+  body:  string
+  }
+ </pre
+        >
         <h4>Example Response:</h4>
         <pre>
 { comment: [
@@ -231,6 +239,13 @@
           inc_votes integer to increment or decrement current vote total.
           Response returns updated article with new vote count.
         </p>
+        <h4>Expected format for Requested Body:</h4>
+        <pre>
+  { 
+  inc_votes:  integer
+  }
+ </pre
+        >
         <h4>Example Response:</h4>
         <pre>
 { article: [
