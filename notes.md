@@ -82,6 +82,20 @@ The Controller handles the client request. Using the information contained on th
 
 ---
 
+List of Endpoints:
+
+1. app.get("/api/topics", getTopics); //responds with a list of topics
+
+2. app.get("/api/articles", getArticles); //responds with a list of articles
+3. app.get("/api/articles/:article_id", getArticleById); //responds with an article by article ID
+4. app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //responds with a list of comments by article ID
+5. app.post("/api/articles/:article_id/comments", postCommentByArticleId); //add a comment to an article by article ID
+6. app.patch("/api/articles/:article_id", patchArticleById); //updates an article by article ID
+
+7. app.get("/api/users", getUsers); //responds with a list of users
+
+---
+
 ## Error Handling
 
 ### List of status codes

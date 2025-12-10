@@ -60,30 +60,44 @@ psql -d nc_news_test
 
 ---
 
+## List of Endpoints:
+
+1. app.get("/api/topics", getTopics); //responds with a list of topics
+
+2. app.get("/api/articles", getArticles); //responds with a list of articles
+3. app.get("/api/articles/:article_id", getArticleById); //responds with an article by article ID
+4. app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //responds with a list of comments by article ID
+5. app.post("/api/articles/:article_id/comments", postCommentByArticleId); //add a comment to an article by article ID
+6. app.patch("/api/articles/:article_id", patchArticleById); //updates an article by article ID
+
+7. app.get("/api/users", getUsers); //responds with a list of users
+
+---
+
 ## List of all functions
 
 ### articles.controller.js
 
 - `getArticles(request, response, next)`
-  Controller: Handles GET /api/articles, fetches all articles and sends as response.
+  Controller: Handles endpoint GET /api/articles, fetches all articles and sends as response.
 - `getArticleById(request, response, next)`
-  Controller: Handles GET /api/articles/:article_id, fetches a single article by ID.
+  Controller: Handles endpoint GET /api/articles/:article_id, fetches a single article by ID.
 - `getCommentsByArticleId(request, response, next)`
-  Controller: Handles GET /api/articles/:article_id/comments, fetches all comments for a given article, ordered by most recent first.
+  Controller: Handles endpoint GET /api/articles/:article_id/comments, fetches all comments for a given article, ordered by most recent first.
 - `postCommentByArticleId(request, response, next)`
-  Controller: Handles POST /api/articles/:article_id/comments, adds a new comment to the specified article.
+  Controller: Handles endpoint POST /api/articles/:article_id/comments, adds a new comment to the specified article.
 - `patchArticleById(request, response, next)`
-  Controller: Handles PATCH /api/articles/:article_id, updates the votes property of an article_ID.
+  Controller: Handles endpoint PATCH /api/articles/:article_id, updates the votes property of an article_ID.
 
 ### topics.controller.js
 
 - `getTopics(request, response, next)`
-  Controller: Handles GET /api/topics, fetches all topics and sends as response.
+  Controller: Handles endpoint GET /api/topics, fetches all topics and sends as response.
 
 ### users.controller.js
 
 - `getUsers(request, response, next)`
-  Controller: Handles GET /api/users, fetches all users and sends as response.
+  Controller: Handles endpoint GET /api/users, fetches all users and sends as response.
 
 ### articles.model.js
 
@@ -137,5 +151,3 @@ psql -d nc_news_test
 ### Server errors
 
 - Unexpected errors are logged, returning 500 Internal Server Error via `handleServerErrors`.
-
----

@@ -6,9 +6,50 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Hello World</h1>
-    <!-- only goes from h1 to h6 -->
-    <h2>Whats your name</h2>
-    <h3>Nice to meet ya</h3>
+    <header>
+      <h1>NC News API Documentation</h1>
+      <nav>
+        <ul>
+          <li>Topics</li>
+          <li>Articles</li>
+          <li>Article by ID</li>
+          <li>Comments by Article</li>
+          <li>Post Comment</li>
+          <li>Patch Article</li>
+          <li>Users</li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="topics">
+        <h2>GET /api/topics</h2>
+        <p>Responds with a list of topics.</p>
+      </section>
+      <section id="articles">
+        <h2>GET /api/articles</h2>
+        <p>Responds with a list of articles.</p>
+      </section>
+      <section id="article-by-id">
+        <h2>GET /api/articles/:article_id</h2>
+        <p>Responds with an article by article ID.</p>
+      </section>
+      <section id="comments-by-article">
+        <h2>GET /api/articles/:article_id/comments</h2>
+        <p>Responds with a list of comments by article ID.</p>
+      </section>
+      <section id="post-comment">
+        <h2>POST /api/articles/:article_id/comments</h2>
+        <p>Add a comment to an article by article ID.</p>
+      </section>
+      <section id="patch-article">
+        <h2>PATCH /api/articles/:article_id</h2>
+        <p>Updates an article by article ID.</p>
+      </section>
+      <section id="users">
+        <h2>GET /api/users</h2>
+        <p>Responds with a list of users.</p>
+      </section>
+    </main>
+    <footer></footer>
   </body>
 </html>
