@@ -23,3 +23,13 @@ h4 {
   padding: 5px;
   border: 1.5px solid orchid;
 }
+
+button:hover {
+  background-color: lightpink;
+  cursor: pointer;
+}
+
+a:hover {
+  background-color: lightpink;
+  cursor: pointer;
+}
