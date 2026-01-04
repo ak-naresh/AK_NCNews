@@ -1,2 +1,2 @@
 node_modules
-.env.*    //so .env files for databases aren't pushed to GitHub
+.env.* 
