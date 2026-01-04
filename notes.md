@@ -90,9 +90,11 @@ List of Endpoints:
 3. app.get("/api/articles/:article_id", getArticleById); //responds with an article by article ID
 4. app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //responds with a list of comments by article ID
 5. app.post("/api/articles/:article_id/comments", postCommentByArticleId); //add a comment to an article by article ID
-6. app.patch("/api/articles/:article_id", patchArticleById); //updates an article by article ID
+6. app.delete("/api/comments/:comment_id", removeCommentById); //deletes a comment by comment ID
 
-7. app.get("/api/users", getUsers); //responds with a list of users
+7. app.patch("/api/articles/:article_id", patchArticleById); //updates an article by article ID
+
+8. app.get("/api/users", getUsers); //responds with a list of users
 
 ---
 
@@ -106,6 +108,8 @@ List of Endpoints:
   Status: Successful GET request, returns data
 - `201 Created`
   Status: Successful new comment created
+- `204 No Content`
+  Status: Successful deletion with no content returned
 - `400 Bad Request`
   Status: Invalid input, e.g. wrong data type
 - `404 Not Found`

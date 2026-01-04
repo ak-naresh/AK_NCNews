@@ -66,8 +66,9 @@ psql -d nc_news_test
 3. app.get("/api/articles/:article_id", getArticleById);
 4. app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 5. app.post("/api/articles/:article_id/comments", postCommentByArticleId);
-6. app.patch("/api/articles/:article_id", patchArticleById);
-7. app.get("/api/users", getUsers);
+6. app.delete("/api/comments/:comment_id", deleteCommentById);
+7. app.patch("/api/articles/:article_id", patchArticleById);
+8. app.get("/api/users", getUsers);
 
 ---
 
@@ -77,10 +78,13 @@ psql -d nc_news_test
 - `getArticleById(request, response, next)`
 - `getCommentsByArticleId(request, response, next)`
 - `postCommentByArticleId(request, response, next)`
+
+- `deteleCommentById(request, response, next)`
+- `removeCommentById(request, response, next)`
+
 - `patchArticleById(request, response, next)`
 
 - `getTopics(request, response, next)`
-
 - `getUsers(request, response, next)`
 
 - `fetchArticles()`
