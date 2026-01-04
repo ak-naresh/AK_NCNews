@@ -10,7 +10,6 @@ beforeEach(() => seed(data));
 afterAll(() => db.end());
 
 //Error Handling
-//1
 describe("Error Handling", () => {
   //1
   test("400 response with Invalid article_id: must be a number for invalid id", () => {
@@ -201,7 +200,6 @@ describe("GET /api/articles", () => {
 });
 
 //GET /api/articles/:article_id
-
 describe("GET /api/articles/:article_id", () => {
   //1
   test("article_id responds with 200", () => {
@@ -388,6 +386,36 @@ describe("POST /api/articles/:article_id/comments", () => {
   });
 });
 
+//DELETE /api/comments/:comment_id
+describe("DELETE /api/comments/:comment_id", () => {
+  //1
+  test("204 response for successful deletion of comment", () => {
+    return request(app).delete("/api/comments/1").expect(204);
+  });
+
+  //2
+  test("404 response for non-existent comment_id", () => {
+    return request(app)
+      .delete("/api/comments/9999")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.message).toBe("Comment not found");
+      });
+  });
+
+  //3
+  test("400 response for invalid comment_id (NaN)", () => {
+    return request(app)
+      .delete("/api/comments/9u99")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.message).toBe(
+          "Invalid comment_id: must be a number"
+        );
+      });
+  });
+});
+
 //PATCH /api/articles/:article_id
 describe("PATCH /api/articles/:article_id", () => {
   //1
@@ -468,7 +496,6 @@ describe("PATCH /api/articles/:article_id", () => {
 });
 
 //GET /api/users
-
 describe("GET /api/users", () => {
   //1
   test("user responds with 200", () => {

@@ -4,6 +4,7 @@ const {
   fetchCommentsByID,
   insertCommentByArticleId,
   updateArticleVotes,
+  removeCommentById,
 } = require("../models/articles.model");
 
 function getArticles(request, response, next) {
@@ -76,6 +77,24 @@ function postCommentByArticleId(request, response, next) {
     });
 }
 
+function deleteCommentById(request, response, next) {
+  const { comment_id } = request.params;
+
+  if (isNaN(Number(comment_id))) {
+    return next({
+      status: 400,
+      message: "Invalid comment_id: must be a number",
+    });
+  }
+
+  removeCommentById(comment_id).then((deleted) => {
+    if (!deleted) {
+      return next({ status: 404, message: "Comment not found" });
+    } else {
+      return response.status(204).send();
+    }
+  });
+}
 function patchArticleById(request, response, next) {
   const { article_id } = request.params;
   const { inc_votes } = request.body;
@@ -107,4 +126,5 @@ module.exports = {
   getCommentsByArticleId,
   postCommentByArticleId,
   patchArticleById,
+  deleteCommentById,
 };

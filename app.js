@@ -8,6 +8,7 @@ const {
   patchArticleById,
 } = require("./controllers/articles.controller");
 const { getUsers } = require("./controllers/users.controller");
+const { deleteCommentById } = require("./controllers/articles.controller");
 const {
   handlePathNotFound,
   handleCustomErrors,
@@ -28,8 +29,8 @@ app.get("/api/articles", getArticles);
 app.get("/api/articles/:article_id", getArticleById);
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 app.post("/api/articles/:article_id/comments", postCommentByArticleId);
+app.delete("/api/comments/:comment_id", deleteCommentById);
 app.patch("/api/articles/:article_id", patchArticleById);
-
 app.get("/api/users", getUsers);
 
 //Error-handling middleware:
