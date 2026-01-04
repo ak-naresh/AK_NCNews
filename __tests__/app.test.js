@@ -9,17 +9,18 @@ const { toBeSortedBy } = require("jest-sorted");
 beforeEach(() => seed(data));
 afterAll(() => db.end());
 
-/*
-Error Handling
-*/
+//Error Handling
+//1
 describe("Error Handling", () => {
   //1
-  test("400 response with Bad Request for invalid id", () => {
+  test("400 response with Invalid article_id: must be a number for invalid id", () => {
     return request(app)
       .get("/api/articles/9u99")
       .expect(400)
       .then((response) => {
-        expect(response.body.message).toBe("Bad Request");
+        expect(response.body.message).toBe(
+          "Invalid article_id: must be a number"
+        );
       });
   });
 
@@ -44,9 +45,7 @@ describe("Error Handling", () => {
   });
 });
 
-/*
-GET /api/topics
-*/
+//GET /api/topics
 describe("GET /api/topics", () => {
   //1
   test("topics responds with 200", () => {
@@ -92,9 +91,7 @@ describe("GET /api/topics", () => {
   });
 });
 
-/*
-GET /api/articles
-*/
+//GET /api/articles
 describe("GET /api/articles", () => {
   //1
   test("articles response with 200", () => {
@@ -203,9 +200,8 @@ describe("GET /api/articles", () => {
   });
 });
 
-/*
-GET /api/articles/:article_id
-*/
+//GET /api/articles/:article_id
+
 describe("GET /api/articles/:article_id", () => {
   //1
   test("article_id responds with 200", () => {
@@ -240,12 +236,14 @@ test("404 response with Not Found for non-existent article_id (ID not found))", 
 });
 
 //4
-test("400 response with Bad Request for invalid article_id (ID is NaN)", () => {
+test("400 response with Invalid article_id: must be a number for invalid article_id (ID is NaN)", () => {
   return request(app)
     .get("/api/articles/9u99")
     .expect(400)
     .then((response) => {
-      expect(response.body.message).toBe("Bad Request");
+      expect(response.body.message).toBe(
+        "Invalid article_id: must be a number"
+      );
     });
 });
 
@@ -259,9 +257,7 @@ test("404 response with Path Not Found for non-existent endpoint", () => {
     });
 });
 
-/*
-GET /api/articles/:article_id/comments
-*/
+//GET /api/articles/:article_id/comments
 describe("GET /api/articles/:article_id/comments", () => {
   //1
   test("comments responds with 200", () => {
@@ -330,12 +326,14 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 
   //6
-  test("400 response with bad request for invalid article_id (ID is NaN) ", () => {
+  test("400 response with Invalid article_id: must be a number for invalid article_id (ID is NaN) ", () => {
     return request(app)
       .get("/api/articles/9u99/comments")
       .expect(400)
       .then((response) => {
-        expect(response.body.message).toBe("Bad Request");
+        expect(response.body.message).toBe(
+          "Invalid article_id: must be a number"
+        );
       });
   });
 
@@ -350,9 +348,7 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 });
 
-/*
-POST /api/articles/:article_id/comments
-*/
+//POST /api/articles/:article_id/comments
 describe("POST /api/articles/:article_id/comments", () => {
   //1
   test("201 response for posting created comment", () => {
@@ -392,9 +388,7 @@ describe("POST /api/articles/:article_id/comments", () => {
   });
 });
 
-/* 
-PATCH /api/articles/:article_id
-*/
+//PATCH /api/articles/:article_id
 describe("PATCH /api/articles/:article_id", () => {
   //1
   test("200 response for updated article when inc_values is an integer", () => {
@@ -414,7 +408,9 @@ describe("PATCH /api/articles/:article_id", () => {
       .send({})
       .expect(400)
       .then((response) => {
-        expect(response.body.message).toBe("Bad Request");
+        expect(response.body.message).toBe(
+          "Invalid inc_votes: must be a number"
+        );
       });
   });
 
@@ -425,7 +421,9 @@ describe("PATCH /api/articles/:article_id", () => {
       .send({ inc_votes: "five" })
       .expect(400)
       .then((response) => {
-        expect(response.body.message).toBe("Bad Request");
+        expect(response.body.message).toBe(
+          "Invalid inc_votes: must be a number"
+        );
       });
   });
 
@@ -469,9 +467,8 @@ describe("PATCH /api/articles/:article_id", () => {
   });
 });
 
-/*
-GET /api/users
-*/
+//GET /api/users
+
 describe("GET /api/users", () => {
   //1
   test("user responds with 200", () => {

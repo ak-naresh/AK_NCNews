@@ -1,4 +1,3 @@
-const db = require("./db/connection");
 const express = require("express");
 const { getTopics } = require("./controllers/topics.controller");
 const {
@@ -18,34 +17,25 @@ const {
 
 const app = express();
 
-/*
----
-Middleware:
-*/
-app.use(express.json()); //parses JSON requests to populate request.body
-app.use("/api", express.static("public")); //Serves static files from 'public' directory for /api
+//Middleware:
+app.use(express.json());
+app.use("/api", express.static("public"));
 
-/*
----
-Route-handler mappings:
-*/
-app.get("/api/topics", getTopics); //responds with a list of topics
+//Route-handler mappings:
+app.get("/api/topics", getTopics);
 
-app.get("/api/articles", getArticles); //responds with a list of articles
-app.get("/api/articles/:article_id", getArticleById); //responds with an article by article ID
-app.get("/api/articles/:article_id/comments", getCommentsByArticleId); //responds with a list of comments by article ID
-app.post("/api/articles/:article_id/comments", postCommentByArticleId); //add a comment to an article by article ID
-app.patch("/api/articles/:article_id", patchArticleById); //updates an article by article ID
+app.get("/api/articles", getArticles);
+app.get("/api/articles/:article_id", getArticleById);
+app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
+app.post("/api/articles/:article_id/comments", postCommentByArticleId);
+app.patch("/api/articles/:article_id", patchArticleById);
 
-app.get("/api/users", getUsers); //responds with a list of users
+app.get("/api/users", getUsers);
 
-/*
----
-Error-handling middleware:  (do not reorder- 404 must be last as it catches unmatched routes)
-*/
-app.use(handleBadRequest); //Handles PSQL bad request errors (400)
-app.use(handleCustomErrors); //Handles custom errors
-app.use(handleServerErrors); //Handles all other server errors (500)
-app.use("/*invalidpath", handlePathNotFound); //Handles unknown endpoints (404)
+//Error-handling middleware:
+app.use(handleBadRequest); //for PSQL bad request errors (400)
+app.use(handleCustomErrors); //for custom errors
+app.use(handleServerErrors); //for all other server errors (500)
+app.use("/*invalidpath", handlePathNotFound); //for unknown endpoints (404)
 
 module.exports = app;

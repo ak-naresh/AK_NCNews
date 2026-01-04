@@ -3,7 +3,6 @@ const format = require("pg-format");
 const mapCommentToArticleId = require("./utils");
 
 const seed = ({ topicData, userData, articleData, commentData }) => {
-  //drop table if exists (must be in reverse order) & create tables in order of dependencies
   return (
     db
       .query(
@@ -61,7 +60,6 @@ DROP TABLE IF EXISTS topics;
         );
         return db.query(insertTopicsQuery);
       })
-
       .then(() => {
         const userRows = userData.map(({ username, name, avatar_url }) => [
           username,
@@ -74,7 +72,6 @@ DROP TABLE IF EXISTS topics;
         );
         return db.query(insertUsersQuery);
       })
-
       .then(() => {
         const articleRows = articleData.map(
           ({
@@ -97,15 +94,11 @@ DROP TABLE IF EXISTS topics;
       //seeding for comments using mapped article_ids
       .then(() => {
         return db
-          .query("SELECT * FROM articles;") //need inserted articles to retrieve autogen articles_id
+          .query("SELECT * FROM articles;")
 
           .then((articleInsertResult) => {
-            //handles result of insertArticlesQuery which contains rows (rows = array of all article records)
             const insertedArticles = articleInsertResult.rows;
 
-            //inserteDArticles stores array from rows for mapping
-
-            //mappedComment from utils, returns anew array of comments instead of mutating original and assiginss to correct aritcle_id instead of article_title
             const mappedComments = mapCommentToArticleId(
               commentData,
               insertedArticles
@@ -129,13 +122,5 @@ DROP TABLE IF EXISTS topics;
       })
   );
 };
-
-/*
-to check again via terminal, in psql, connect to nc_news_test , then to check type: 
-
-SELECT c.comment_id, c.article_id, a.title
-FROM comments c
-JOIN articles a ON c.article_id = a.article_id;
-*/
 
 module.exports = seed;
