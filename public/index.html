@@ -22,6 +22,7 @@
           <li><a href="#article-by-id">Article by ID</a></li>
           <li><a href="#comments-by-article">Comments by Article</a></li>
           <li><a href="#post-comment">Post Comment</a></li>
+          <li><a href="#delete-comment">Delete Comment</a></li>
           <li><a href="#patch-article">Patch Article</a></li>
         </ul>
 
@@ -228,6 +229,26 @@
         </ul>
       </section>
 
+      <section id="delete-comment">
+        <h2>
+          <p>___________________</p>
+          DELETE /api/comments/:comment_id
+        </h2>
+        <h4>Description:</h4>
+        <p>
+          Deletes a comment by comment ID. Responds with status 204 and no
+          content.
+        </p>
+        <h4>Expected Error Codes:</h4>
+        <ul>
+          <li>
+            400 Bad Request – Invalid comment ID (e.g., wrong data type, 22P02
+            PSQL error for invalid syntax)
+          </li>
+          <li>404 Not Found – Comment not found</li>
+          <li>500 Internal Server Error – Unexpected server error</li>
+        </ul>
+      </section>
       <section id="patch-article">
         <h2>
           <p>___________________</p>
