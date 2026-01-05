@@ -17,11 +17,15 @@ const {
 } = require("./errors");
 
 const app = express();
+const cors = require("cors");
 
 const path = require("path");
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, "public")));
+
+//Enable CORS:
+app.use(cors());
 
 //Middleware:
 app.use(express.json());
