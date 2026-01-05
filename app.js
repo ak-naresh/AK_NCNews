@@ -21,7 +21,7 @@ const cors = require("cors");
 
 const path = require("path");
 
-// Serve static files from the public directory
+//Serve static files from public dir
 app.use(express.static(path.join(__dirname, "public")));
 
 //Enable CORS:
