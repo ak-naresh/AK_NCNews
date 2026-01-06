@@ -21,7 +21,6 @@ const cors = require("cors");
 
 const path = require("path");
 
-//Enable CORS:
 app.use(cors());
 
 //Middleware:
