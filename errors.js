@@ -1,11 +1,9 @@
-//When not: 200 OK / 201 Created
-
-//Handles 404 Path Not Found (first middleware)
+//404 Handler (first middleware)
 function handlePathNotFound(request, response, next) {
   response.status(404).send({ message: "Path Not Found" });
 }
 
-//Handles custom errors
+//Custom-error Handler
 function handleCustomErrors(error, request, response, next) {
   if (error.status && error.message) {
     response.status(error.status).send({ message: error.message });
@@ -15,14 +13,14 @@ function handleCustomErrors(error, request, response, next) {
   }
 }
 
-//Handles 400 Bad Request
+//400 Handler
 function handleBadRequest(error, request, response, next) {
   if (error.code === "22P02") {
     response.status(400).send({ message: "Bad Request" });
   } else next(error);
 }
 
-//Handles all other server errors
+//All other server-errors Handler
 function handleServerErrors(error, request, response, next) {
   console.log(error);
   response.status(500).send({ message: "Internal Server Error" });

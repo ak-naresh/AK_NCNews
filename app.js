@@ -40,9 +40,9 @@ app.patch("/api/articles/:article_id", patchArticleById);
 app.get("/api/users", getUsers);
 
 //Error-handling middleware:
-app.use(handleBadRequest); //for PSQL bad request errors (400)
-app.use(handleCustomErrors); //for custom errors
-app.use(handleServerErrors); //for all other server errors (500)
-app.use("/*invalidpath", handlePathNotFound); //for unknown endpoints (404)
+app.use(handleBadRequest);
+app.use(handleCustomErrors);
+app.use(handleServerErrors);
+app.use("/*invalidpath", handlePathNotFound);
 
 module.exports = app;
