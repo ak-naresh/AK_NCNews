@@ -112,6 +112,8 @@
           <hr />
           GET /api/articles/:article_id
         </h2>
+        <h4>Parametric Endpoint:</h4>
+        <p><code>:article_id</code></p>
         <h4>Description:</h4>
         <p>
           Responds with an article by article ID Response includes article's:
@@ -147,6 +149,8 @@
           <hr />
           GET /api/articles/:article_id/comments
         </h2>
+        <h4>Parametric Endpoint:</h4>
+        <p><code>:article_id</code></p>
         <h4>Description:</h4>
         <p>
           Responds with a list of comments by article ID. Each comment includes:
@@ -188,6 +192,8 @@
           <hr />
           POST /api/articles/:article_id/comments
         </h2>
+        <h4>Parametric Endpoint:</h4>
+        <p><code>:article_id</code></p>
         <h4>Description:</h4>
         <p>
           Add a comment to an article by article ID. Requires both the username
@@ -234,6 +240,8 @@
           <hr />
           DELETE /api/comments/:comment_id
         </h2>
+        <h4>Parametric Endpoint:</h4>
+        <p><code>:comment_id</code></p>
         <h4>Description:</h4>
         <p>
           Deletes a comment by comment ID. Responds with status 204 and no
@@ -254,6 +262,8 @@
           <hr />
           PATCH /api/articles/:article_id
         </h2>
+        <h4>Parametric Endpoint:</h4>
+        <p><code>:article_id</code></p>
         <h4>Description:</h4>
         <p>
           Updates vote count for an article ID. Requires a request body with an
