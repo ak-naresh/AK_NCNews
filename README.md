@@ -2,118 +2,77 @@
 
 This project is a RESTful API for NC News platform, built with Node.js and Express. Providings endpoints for articles, topics, users, and comments, using PSQL for data storage, and the API supporting CRUD operations.
 
----
+<hr/>
 
-## Instructions:
+Instructions:
 
-1. You should have postgres installed on your machine...
+1. Install postgres
 2. Install dependencies listed in `package.json` with:
-
-```sh
+<pre>
 npm install
-```
-
+</pre>
 3. To setup the databases locally run the following script:
-
-```sh
+<pre>
 npm run setup-dbs
-```
-
+</pre>
 4. Generate 'env' files on root level of the project- one for each environment:
 
-   - for `.env.test`- populate the file with the below for test-database
-
-   ```sh
+- for `.env.test`- populate the file with the below for test-database
+<pre>
    PGDATABASE=nc_news_test
-   ```
-
-   - for `.env.development`- populate the file with the below for development-database
-
-   ```sh
+</pre>
+- for `.env.development`- populate the file with the below for development-database
+<pre>
    PGDATABASE=nc_news
-   ```
+</pre>
 
 5. To seed the dev database run the following script:
-
-```sh
+<pre>
 npm run seed-dev
-```
+</pre>
 
----
+<hr/>
 
-## Verifying Database Connection & Troubleshooting
+Verifying Database Connection & Troubleshooting
 
 - To verify your database connection, you can use the `psql` command-line tool:
-
-```sh
+<pre>
 psql -d nc_news
-```
+</pre>
 
 - Or for the test database:
-
-```sh
+<pre>
 psql -d nc_news_test
-```
-
+</pre>
 - If you see a prompt without errors, connection is successful.
 
----
+<hr/>
 
-## List of Endpoints:
+List of Endpoints:
 
-1. app.get("/api/topics", getTopics);
-2. app.get("/api/articles", getArticles);
-3. app.get("/api/articles/:article_id", getArticleById);
-4. app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
-5. app.post("/api/articles/:article_id/comments", postCommentByArticleId);
-6. app.delete("/api/comments/:comment_id", deleteCommentById);
-7. app.patch("/api/articles/:article_id", patchArticleById);
-8. app.get("/api/users", getUsers);
+- app.get("/api/topics", getTopics);
+- app.get("/api/articles", getArticles);
+- app.get("/api/articles/:article_id", getArticleById);
+- app.patch("/api/articles/:article_id", patchArticleById);
+- app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
+- app.post("/api/articles/:article_id/comments", postCommentByArticleId);
+- app.delete("/api/comments/:comment_id", deleteCommentById);
+- app.get("/api/users", getUsers);
 
----
+<hr/>
 
-## List of functions
-
-- `getArticles(request, response, next)`
-- `getArticleById(request, response, next)`
-- `getCommentsByArticleId(request, response, next)`
-- `postCommentByArticleId(request, response, next)`
-
-- `deteleCommentById(request, response, next)`
-- `removeCommentById(request, response, next)`
-
-- `patchArticleById(request, response, next)`
-
-- `getTopics(request, response, next)`
-- `getUsers(request, response, next)`
-
-- `fetchArticles()`
-- `lookupArticleId(id)`
-- `fetchCommentsByID(id)`
-- `insertCommentByArticleId(article_id, username, body)`
-- `updateArticleVotes(article_id, inc_votes)`
+List of functions
 
 - `fetchTopics()`
 - `selectUsers()`
 - `seed({ topicData, userData, articleData, commentData })`
 - `mapArticleTitleToId(comments, articles)`
 
----
+<hr/>
 
-## Error Handling
+<p>Error Handling</p>
 
-### Unknown endpoints
-
-- Unknown endpoints are handled by `handlePathNotFound`, returning 404 Not Found .
-
-### Custom errors
-
-- Custom errors are handled by `handleCustomErrors`.
-
-### PSQL errors
-
-- `22P02` are handled by `handleBadRequest`, returning 400 Bad Request.
-
-### Server errors
-
-- Unexpected errors are logged, returning 500 Internal Server Error via `handleServerErrors`.
+- Unknown endpoints: handled by `handlePathNotFound`, returning 404 Not Found .
+- Custom errors: handled by `handleCustomErrors`.
+- PSQL errors: `22P02` are handled by `handleBadRequest`, returning 400 Bad Request.
+- Server errors: Unexpected errors are logged, returning 500 Internal Server Error via `handleServerErrors`.
