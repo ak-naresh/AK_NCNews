@@ -4,78 +4,7 @@
 
 ---
 
-## Installation
-
-1. **Clone the repository**:
-
-   ```bash
-   git clone <repository-url>
-   cd northcoders-news-BE
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
----
-
-## Environment Setup
-
-Create two environment files in the root directory:
-
-1. **`.env.test`** (for test database):
-
-   ```
-   PGDATABASE=nc_news_test
-   ```
-
-2. **`.env.development`** (for development database):
-   ```
-   PGDATABASE=nc_news
-   ```
-
----
-
-## 🗄️ Database Setup
-
-1. **Create databases**:
-
-   ```bash
-   npm run setup-dbs
-   ```
-
-2. **Seed the development database**:
-
-   ```bash
-   npm run seed
-   ```
-
-3. **Verify database connection**:
-
-   ```bash
-   # For development database
-   psql -d nc_news
-
-   # For test database
-   psql -d nc_news_test
-   ```
-
----
-
-## ▶️ Running the Application
-
-**Start the server**:
-
-```bash
-npm start
-```
-
-The server will run on the default port. Access the API documentation at `http://localhost:9090` (or your configured port).
-
----
-
-## 📡 API Endpoints
+## API Endpoints
 
 ### **Topics**
 
@@ -101,7 +30,7 @@ For detailed request/response examples, see the API documentation page at `/` or
 
 ---
 
-## 🚨 Error Handling
+## Error Handling
 
 The API implements comprehensive error handling:
 
@@ -120,23 +49,11 @@ The API implements comprehensive error handling:
 
 ## Testing
 
-**Run all tests**:
-
-```bash
-npm test
-```
-
-**Run specific test suites**:
-
-```bash
-npm run test-seed
-```
-
 Tests are written using **Jest** and **Supertest**, with additional matchers from **jest-extended** and **jest-sorted**.
 
 ---
 
-## 📝 Key Functions
+## Key Functions
 
 ### **Model Functions**
 

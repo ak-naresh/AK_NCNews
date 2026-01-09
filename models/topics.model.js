@@ -1,6 +1,5 @@
 const db = require("../db/connection");
 
-//fetchTopics
 function fetchTopics() {
   return db
     .query(`SELECT slug, description FROM topics;`)

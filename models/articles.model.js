@@ -1,6 +1,5 @@
 const db = require("../db/connection");
 
-//fetchArticles
 function fetchArticles() {
   return db
     .query(
@@ -28,7 +27,6 @@ function fetchArticles() {
     });
 }
 
-//lookupArticleId
 function lookupArticleId(article_id) {
   return db
     .query(`SELECT * FROM articles WHERE article_id = $1`, [article_id])
@@ -37,7 +35,6 @@ function lookupArticleId(article_id) {
     });
 }
 
-//fetchCommentsByID
 function fetchCommentsByID(article_id) {
   return db
     .query(
@@ -49,7 +46,6 @@ function fetchCommentsByID(article_id) {
     });
 }
 
-//insertCommentByArticleId
 function insertCommentByArticleId(article_id, username, body) {
   return db
     .query("SELECT * FROM articles WHERE article_id = $1;", [article_id])
@@ -66,7 +62,6 @@ function insertCommentByArticleId(article_id, username, body) {
     });
 }
 
-//removeCommentById
 function removeCommentById(comment_id) {
   return db
     .query("DELETE FROM comments WHERE comment_id = $1 RETURNING *;", [
@@ -77,7 +72,6 @@ function removeCommentById(comment_id) {
     });
 }
 
-//updateArticleVotes
 function updateArticleVotes(article_id, inc_votes) {
   return db
     .query(

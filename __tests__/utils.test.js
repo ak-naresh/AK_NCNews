@@ -7,7 +7,6 @@ beforeEach(() => seed(data));
 afterAll(() => db.end());
 
 describe("mapArticleTitleToId", () => {
-  // 1
   test("maps article_title to article_id correctly", () => {
     const comments = [
       {
@@ -36,7 +35,6 @@ describe("mapArticleTitleToId", () => {
     expect(result[0]).toHaveProperty("created_at", comments[0].created_at);
   });
 
-  //2
   test("does not mutate original array and returns a new array", () => {
     const comments = [
       {
@@ -71,7 +69,6 @@ describe("mapArticleTitleToId", () => {
     ]);
   });
 
-  //3
   test("sets article_id to undefined if article_title does not match", () => {
     const comments = [{ article_title: "Nonexistent Article" }];
     const articles = [

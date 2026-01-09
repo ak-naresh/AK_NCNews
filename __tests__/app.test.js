@@ -11,7 +11,6 @@ afterAll(() => db.end());
 
 //Error Handling
 describe("Error Handling", () => {
-  //1
   test("400 response with Invalid article_id: must be a number for invalid id", () => {
     return request(app)
       .get("/api/articles/9u99")
@@ -23,7 +22,6 @@ describe("Error Handling", () => {
       });
   });
 
-  //2
   test("404 response with Path Not Found for non-existent endpoint", () => {
     return request(app)
       .get("/api/banana")
@@ -33,7 +31,6 @@ describe("Error Handling", () => {
       });
   });
 
-  //3
   test("404 response with custom error for missing article", () => {
     return request(app)
       .get("/api/articles/9999")
@@ -46,7 +43,6 @@ describe("Error Handling", () => {
 
 //GET /api/topics
 describe("GET /api/topics", () => {
-  //1
   test("topics responds with 200", () => {
     return request(app)
       .get("/api/topics")
@@ -56,7 +52,6 @@ describe("GET /api/topics", () => {
       });
   });
 
-  //2
   test("topics is an array", () => {
     return request(app)
       .get("/api/topics")
@@ -66,7 +61,6 @@ describe("GET /api/topics", () => {
       });
   });
 
-  //3
   test("topics array is expected length of 3 (slug, description, img_url)", () => {
     return request(app)
       .get("/api/topics")
@@ -76,7 +70,6 @@ describe("GET /api/topics", () => {
       });
   });
 
-  //4
   test("first topic matches expected object", () => {
     return request(app)
       .get("/api/topics")
@@ -92,7 +85,6 @@ describe("GET /api/topics", () => {
 
 //GET /api/articles
 describe("GET /api/articles", () => {
-  //1
   test("articles response with 200", () => {
     return request(app)
       .get("/api/articles")
@@ -102,7 +94,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //2
   test("articles is an array", () => {
     return request(app)
       .get("/api/articles")
@@ -112,7 +103,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //3
   test("articles array is expected length of 13", () => {
     return request(app)
       .get("/api/articles")
@@ -122,7 +112,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //4
   test("each article has correct properties including comment_count", () => {
     return request(app)
       .get("/api/articles")
@@ -141,7 +130,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //5
   test("each article property is correct type", () => {
     return request(app)
       .get("/api/articles")
@@ -160,7 +148,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //6
   test("articles are sorted by date descending", () => {
     return request(app)
       .get("/api/articles")
@@ -172,7 +159,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //7
   test("article object does not have a body property", () => {
     return request(app)
       .get("/api/articles")
@@ -184,7 +170,6 @@ describe("GET /api/articles", () => {
       });
   });
 
-  //8
   test("comment_count for first and last article is correct", () => {
     return request(app)
       .get("/api/articles")
@@ -201,7 +186,6 @@ describe("GET /api/articles", () => {
 
 //GET /api/articles/:article_id
 describe("GET /api/articles/:article_id", () => {
-  //1
   test("article_id responds with 200", () => {
     return request(app)
       .get("/api/articles/1")
@@ -212,7 +196,6 @@ describe("GET /api/articles/:article_id", () => {
       });
   });
 
-  //2
   test("article is an object", () => {
     return request(app)
       .get("/api/articles/1")
@@ -223,7 +206,6 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
-//3
 test("404 response with Not Found for non-existent article_id (ID not found))", () => {
   return request(app)
     .get("/api/articles/9999")
@@ -233,7 +215,6 @@ test("404 response with Not Found for non-existent article_id (ID not found))", 
     });
 });
 
-//4
 test("400 response with Invalid article_id: must be a number for invalid article_id (ID is NaN)", () => {
   return request(app)
     .get("/api/articles/9u99")
@@ -245,7 +226,6 @@ test("400 response with Invalid article_id: must be a number for invalid article
     });
 });
 
-//5
 test("404 response with Path Not Found for non-existent endpoint", () => {
   return request(app)
     .get("/api/banana")
@@ -257,7 +237,6 @@ test("404 response with Path Not Found for non-existent endpoint", () => {
 
 //GET /api/articles/:article_id/comments
 describe("GET /api/articles/:article_id/comments", () => {
-  //1
   test("comments responds with 200", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -267,7 +246,6 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //2
   test("comments array each has required properties", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -284,7 +262,6 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //3
   test("each comment property is correct type", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -301,7 +278,6 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //4
   test("comments is an array", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -311,7 +287,6 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //5
   test("comments are sorted by date descending", () => {
     return request(app)
       .get("/api/articles/1/comments")
@@ -323,7 +298,6 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //6
   test("400 response with Invalid article_id: must be a number for invalid article_id (ID is NaN) ", () => {
     return request(app)
       .get("/api/articles/9u99/comments")
@@ -335,7 +309,6 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 
-  //7
   test("404 response with not found for non-existent article_id (ID not found)", () => {
     return request(app)
       .get("/api/articles/9999/comments")
@@ -348,7 +321,6 @@ describe("GET /api/articles/:article_id/comments", () => {
 
 //POST /api/articles/:article_id/comments
 describe("POST /api/articles/:article_id/comments", () => {
-  //1
   test("201 response for posting created comment", () => {
     return request(app)
       .post("/api/articles/1/comments")
@@ -363,7 +335,6 @@ describe("POST /api/articles/:article_id/comments", () => {
       });
   });
 
-  //2
   test("400 response for username and/or body missing in request body", () => {
     return request(app)
       .post("/api/articles/1/comments")
@@ -374,7 +345,6 @@ describe("POST /api/articles/:article_id/comments", () => {
       });
   });
 
-  //3
   test("404 response for non-existent article", () => {
     return request(app)
       .post("/api/articles/9999/comments")
@@ -388,12 +358,10 @@ describe("POST /api/articles/:article_id/comments", () => {
 
 //DELETE /api/comments/:comment_id
 describe("DELETE /api/comments/:comment_id", () => {
-  //1
   test("204 response for successful deletion of comment", () => {
     return request(app).delete("/api/comments/1").expect(204);
   });
 
-  //2
   test("404 response for non-existent comment_id", () => {
     return request(app)
       .delete("/api/comments/9999")
@@ -403,7 +371,6 @@ describe("DELETE /api/comments/:comment_id", () => {
       });
   });
 
-  //3
   test("400 response for invalid comment_id (NaN)", () => {
     return request(app)
       .delete("/api/comments/9u99")
@@ -418,7 +385,6 @@ describe("DELETE /api/comments/:comment_id", () => {
 
 //PATCH /api/articles/:article_id
 describe("PATCH /api/articles/:article_id", () => {
-  //1
   test("200 response for updated article when inc_values is an integer", () => {
     return request(app)
       .patch("/api/articles/1")
@@ -429,7 +395,6 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 
-  //2
   test("400 response when inc_votes is missing in request body", () => {
     return request(app)
       .patch("/api/articles/1")
@@ -442,7 +407,6 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 
-  //3
   test("400 response when inc_votes is NaN", () => {
     return request(app)
       .patch("/api/articles/1")
@@ -455,7 +419,6 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 
-  //4
   test("404 response when article_ID is non-existent", () => {
     return request(app)
       .patch("/api/articles/9999")
@@ -466,7 +429,6 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 
-  //5
   test("updates article votes correctly following an incremention or decremention", () => {
     return request(app)
       .patch("/api/articles/1")
@@ -477,7 +439,6 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 
-  //6
   test("does not modify any other properties within article", () => {
     return request(app)
       .patch("/api/articles/1")
@@ -497,7 +458,6 @@ describe("PATCH /api/articles/:article_id", () => {
 
 //GET /api/users
 describe("GET /api/users", () => {
-  //1
   test("user responds with 200", () => {
     return request(app)
       .get("/api/users")
@@ -507,7 +467,6 @@ describe("GET /api/users", () => {
       });
   });
 
-  //2
   test("users is an array", () => {
     return request(app)
       .get("/api/users")
@@ -517,7 +476,6 @@ describe("GET /api/users", () => {
       });
   });
 
-  //3
   test("users array is expected length of 4", () => {
     return request(app)
       .get("/api/users")
@@ -527,7 +485,6 @@ describe("GET /api/users", () => {
       });
   });
 
-  //4
   test("each user has required properties", () => {
     return request(app)
       .get("/api/users")
@@ -541,7 +498,6 @@ describe("GET /api/users", () => {
       });
   });
 
-  //5
   test("each user property is correct type", () => {
     return request(app)
       .get("/api/users")
