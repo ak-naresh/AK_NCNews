@@ -1,78 +1,155 @@
-# NC News Backend
+# NC News Backend API
 
-This project is a RESTful API for NC News platform, built with Node.js and Express. Providings endpoints for articles, topics, users, and comments, using PSQL for data storage, and the API supporting CRUD operations.
+## RESTful API for NC News platform, built with **Node.js**, **Express**, and **PostgreSQL**. This API provides endpoints for managing articles, topics, users, and comments with full CRUD support.
 
-<hr/>
+---
 
-Instructions:
+## Installation
 
-1. Install postgres
-2. Install dependencies listed in `package.json` with:
-<pre>
-npm install
-</pre>
-3. To setup the databases locally run the following script:
-<pre>
-npm run setup-dbs
-</pre>
-4. Generate 'env' files on root level of the project- one for each environment:
+1. **Clone the repository**:
 
-- for `.env.test`- populate the file with the below for test-database
-<pre>
+   ```bash
+   git clone <repository-url>
+   cd northcoders-news-BE
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+---
+
+## Environment Setup
+
+Create two environment files in the root directory:
+
+1. **`.env.test`** (for test database):
+
+   ```
    PGDATABASE=nc_news_test
-</pre>
-- for `.env.development`- populate the file with the below for development-database
-<pre>
+   ```
+
+2. **`.env.development`** (for development database):
+   ```
    PGDATABASE=nc_news
-</pre>
+   ```
 
-5. To seed the dev database run the following script:
-<pre>
-npm run seed-dev
-</pre>
+---
 
-<hr/>
+## 🗄️ Database Setup
 
-Verifying Database Connection & Troubleshooting
+1. **Create databases**:
 
-- To verify your database connection, you can use the `psql` command-line tool:
-<pre>
-psql -d nc_news
-</pre>
+   ```bash
+   npm run setup-dbs
+   ```
 
-- Or for the test database:
-<pre>
-psql -d nc_news_test
-</pre>
-- If you see a prompt without errors, connection is successful.
+2. **Seed the development database**:
 
-<hr/>
+   ```bash
+   npm run seed
+   ```
 
-List of Endpoints:
+3. **Verify database connection**:
 
-- app.get("/api/topics", getTopics);
-- app.get("/api/articles", getArticles);
-- app.get("/api/articles/:article_id", getArticleById);
-- app.patch("/api/articles/:article_id", patchArticleById);
-- app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
-- app.post("/api/articles/:article_id/comments", postCommentByArticleId);
-- app.delete("/api/comments/:comment_id", deleteCommentById);
-- app.get("/api/users", getUsers);
+   ```bash
+   # For development database
+   psql -d nc_news
 
-<hr/>
+   # For test database
+   psql -d nc_news_test
+   ```
 
-List of functions
+---
 
-- `fetchTopics()`
-- `selectUsers()`
-- `seed({ topicData, userData, articleData, commentData })`
-- `mapArticleTitleToId(comments, articles)`
+## ▶️ Running the Application
 
-<hr/>
+**Start the server**:
 
-<p>Error Handling</p>
+```bash
+npm start
+```
 
-- Unknown endpoints: handled by `handlePathNotFound`, returning 404 Not Found .
-- Custom errors: handled by `handleCustomErrors`.
-- PSQL errors: `22P02` are handled by `handleBadRequest`, returning 400 Bad Request.
-- Server errors: Unexpected errors are logged, returning 500 Internal Server Error via `handleServerErrors`.
+The server will run on the default port. Access the API documentation at `http://localhost:9090` (or your configured port).
+
+---
+
+## 📡 API Endpoints
+
+### **Topics**
+
+- `GET /api/topics` - Get all topics
+
+### **Articles**
+
+- `GET /api/articles` - Get all articles (sorted by date, includes comment count)
+- `GET /api/articles/:article_id` - Get a specific article by ID
+- `PATCH /api/articles/:article_id` - Update article vote count
+- `GET /api/articles/:article_id/comments` - Get all comments for an article
+- `POST /api/articles/:article_id/comments` - Add a comment to an article
+
+### **Comments**
+
+- `DELETE /api/comments/:comment_id` - Delete a comment by ID
+
+### **Users**
+
+- `GET /api/users` - Get all users
+
+For detailed request/response examples, see the API documentation page at `/` or refer to `public/index.html`.
+
+---
+
+## 🚨 Error Handling
+
+The API implements comprehensive error handling:
+
+- **400 Bad Request**: Invalid input data or malformed requests (PSQL error code `22P02`)
+- **404 Not Found**: Resource not found or invalid endpoints
+- **500 Internal Server Error**: Unexpected server errors
+
+**Error Handler Functions**:
+
+- `handlePathNotFound` - Catches unknown endpoints
+- `handleCustomErrors` - Processes custom application errors
+- `handleBadRequest` - Handles PSQL validation errors
+- `handleServerErrors` - Catches all other server errors
+
+---
+
+## Testing
+
+**Run all tests**:
+
+```bash
+npm test
+```
+
+**Run specific test suites**:
+
+```bash
+npm run test-seed
+```
+
+Tests are written using **Jest** and **Supertest**, with additional matchers from **jest-extended** and **jest-sorted**.
+
+---
+
+## 📝 Key Functions
+
+### **Model Functions**
+
+- `fetchTopics()` - Retrieves all topics
+- `fetchArticles()` - Retrieves all articles with comment counts
+- `lookupArticleId(article_id)` - Finds article by ID
+- `fetchCommentsByID(article_id)` - Gets comments for an article
+- `insertCommentByArticleId(article_id, username, body)` - Creates a new comment
+- `removeCommentById(comment_id)` - Deletes a comment
+- `updateArticleVotes(article_id, inc_votes)` - Updates article votes
+- `selectUsers()` - Retrieves all users
+
+### **Seed Functions**
+
+- `seed({ topicData, userData, articleData, commentData })` - Populates database
+- `mapArticleTitleToId(comments, articles)` - Maps article titles to IDs
