@@ -5,14 +5,19 @@ body {
 }
 
 h1,
-h2,
-footer {
-  color: orchid;
+h2 {
+  color: white;
   text-align: center;
 }
 
-h4 {
-  color: lightpink;
+h2,
+h4,
+footer {
+  color: purple;
+}
+
+footer {
+  text-align: right;
 }
 
 .header-nav-border-box {
@@ -22,15 +27,11 @@ h4 {
   align-items: flex-start;
   width: fit-content;
   padding: 9px;
-  border: 3px solid orchid;
+  border: 3px solid purple;
 }
 
-button:hover {
-  background-color: lightpink;
-  cursor: pointer;
-}
-
+button:hover,
 a:hover {
-  background-color: lightpink;
+  background-color: orchid;
   cursor: pointer;
 }
